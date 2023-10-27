@@ -138,8 +138,9 @@ class _MyLogginState extends State<MyLoggin> {
                 onPressed: () async {
                   String email = emailController.text;
                   String password = passwordController.text;
+
                   User? user = await _authHelper.signInWithEmailAndPassword(
-                      email, password);
+                      email, password, context);
                   //  var user;
                   print('Valor de una variable:');
                   if (user != null) {
@@ -147,13 +148,6 @@ class _MyLogginState extends State<MyLoggin> {
                       const SnackBar(
                         content: Text('Inicio de sesión con Google exitoso'),
                         backgroundColor: Colors.green,
-                      ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Error al iniciar sesión con Google'),
-                        backgroundColor: Colors.red,
                       ),
                     );
                   }
