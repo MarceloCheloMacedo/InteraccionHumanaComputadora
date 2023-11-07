@@ -1,9 +1,9 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'package:your_teacher/available_teachers.dart';
-import 'package:your_teacher/flutterMethods.dart';
+import 'package:your_teacher/Pantallas/Available_Lessons.dart';
+import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:csc_picker/csc_picker.dart';
-import 'package:your_teacher/user.dart';
+import 'package:your_teacher/Dominios/user.dart';
 
 class MyFind_Class extends StatefulWidget {
   const MyFind_Class({Key? key});
@@ -201,7 +201,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => 
-                          Available_Teachers(
+                          Available_Lessons(
                             teachersFilter: List.generate(
                                     20,
                                     (i) => User(
@@ -209,6 +209,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                                      email: 'A description of what needs to be done for Todo $i',
                                      displayName:'A description of what needs to be done for Todo $i',
                                      photoURL:'A description of what needs to be done for Todo $i',
+                                     userType: UserType.profesor,
                                     ),
                                   ),
                           )

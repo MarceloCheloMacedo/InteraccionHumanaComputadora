@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:your_teacher/find_class.dart';
-import 'package:your_teacher/flutterMethods.dart';
-import 'package:your_teacher/user.dart';
+import 'package:your_teacher/Pantallas/find_class.dart';
+import 'package:your_teacher/Dominios/user.dart';
 
-class Available_Teachers extends StatelessWidget {
+class Available_Lessons extends StatelessWidget {
     
-  const Available_Teachers({super.key, required this.teachersFilter});
+  const Available_Lessons({super.key, required this.teachersFilter});
   final List<User> teachersFilter;
 
   @override
