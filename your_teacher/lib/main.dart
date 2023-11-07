@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:your_teacher/find_Class.dart';
 import 'package:your_teacher/login.dart';
+
 import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding
@@ -17,10 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(      
+      theme: ThemeData(colorSchemeSeed:  Color.fromARGB(255, 62, 103, 215), useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      title: 'Loggin',
-      home: MyLoggin(),
+      title: 'Buscar Clase',      
+      home: MyFind_Class(),
+      
     );
   }
 }
