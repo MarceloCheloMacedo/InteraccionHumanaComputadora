@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:your_teacher/Pantallas/register.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:your_teacher/Tools/colors.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 
 class MyLoggin extends StatefulWidget {
