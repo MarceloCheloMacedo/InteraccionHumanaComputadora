@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:your_teacher/register.dart';
+import 'package:your_teacher/Pantallas/register.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:your_teacher/Tools/colors.dart';
-import 'package:your_teacher/flutterMethods.dart';
+import 'package:your_teacher/Logica/flutterMethods.dart';
 
 class MyLoggin extends StatefulWidget {
   const MyLoggin({Key? key});
@@ -17,6 +15,7 @@ class _MyLogginState extends State<MyLoggin> {
   TextEditingController passwordController = TextEditingController();
 
   final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
+  double fontSizeRegister = 20.0; // Tamaño de letra aumentado en 2 unidades.
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +127,7 @@ class _MyLogginState extends State<MyLoggin> {
                   ),
                 ),
                 child: const Text(
-                  'Iniciar Sesión',
+                  'Sign in',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 20.0,
@@ -154,7 +153,7 @@ class _MyLogginState extends State<MyLoggin> {
                 },
               ),
               const SizedBox(height: 5), // Agregar espacio entre los botones
-              const Text('OR',
+              const Text('Not a member?',
                   style: TextStyle(
                       fontFamily: 'NerkoOne',
                       fontSize: 20.0,
@@ -171,45 +170,27 @@ class _MyLogginState extends State<MyLoggin> {
               const Divider(
                 height: 2.0,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: googleColor,
-                  fixedSize: const Size.fromWidth(300),
-                  padding: const EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        20.0), // Ajusta el valor para controlar la cantidad de redondeo
+              MouseRegion(
+                child: InkWell(
+                  child: Text(
+                    "Regístrate",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 17, 54, 201),
+                      fontSize: fontSizeRegister,
+                      decoration: TextDecoration.underline,
+                      fontFamily:
+                          'NerkoOne', // Cambia el color de texto según tus preferencias.
+                      // Puedes ajustar otras propiedades de estilo de texto aquí.
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Register()));
+                  },
                 ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Register()));
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      FontAwesomeIcons
-                          .googlePlusG, // Aquí puedes elegir el icono que desees
-                      color: Colors.white70,
-                      size:
-                          24.0, // Puedes ajustar el tamaño del icono según tus necesidades
-                    ),
-                    SizedBox(width: 16), // Espacio entre el icono y el texto
-                    Text(
-                      'Register with Google',
-                      style: TextStyle(
-                        color: Colors.white,
-                        backgroundColor: googleColor,
-                        fontSize: 20.0,
-                        fontFamily: 'NerkoOne',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              )
             ],
           )
         ],
