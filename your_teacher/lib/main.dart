@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:your_teacher/find_Class.dart';
-import 'package:your_teacher/Pantallas/login.dart';
+import 'package:your_teacher/Pantallas/homePage.dart';
 import 'package:your_teacher/AccesoDatos/firebase_options.dart';
 
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(colorSchemeSeed:  Color.fromARGB(255, 62, 103, 215), useMaterial3: true),
       debugShowCheckedModeBanner: false,
       title: 'Buscar Clase',      
-      home: MyFind_Class(),
+      home: MyHomePage(),
       
     );
   }

@@ -44,7 +44,8 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                     fontSize: 40.0,
                     fontFamily: 'NerkoOne',
                   ),
-                  textAlign: TextAlign.center,),   
+                  textAlign: TextAlign.center,
+                ),   
                 const Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.0),
                 child: Text(''),
@@ -219,6 +220,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                 ),              
               ],
             ),  
+            
         ),                
       ),
     );
