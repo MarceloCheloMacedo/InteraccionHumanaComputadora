@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:your_teacher/Pantallas/register.dart';
-import 'package:your_teacher/find_Class.dart';
+import 'package:your_teacher/Pantallas/find_class.dart';
 
-class NavDrawer extends StatelessWidget {
+class NavDrawerStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -37,7 +36,12 @@ class NavDrawer extends StatelessWidget {
                 fontSize: 25.0,
                 fontFamily: 'NerkoOne',
               ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyFind_Class()))
+              },
           ),
           ListTile(
             leading: Icon(Icons.paid,size: 35,color:Colors.black,),
@@ -46,7 +50,9 @@ class NavDrawer extends StatelessWidget {
                 fontSize: 25.0,
                 fontFamily: 'NerkoOne',
               ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {              
+                Navigator.of(context).pop() 
+              },
           ),
           ListTile(
             leading: Icon(Icons.inventory_2,size: 35,color:Colors.black,),
@@ -66,10 +72,7 @@ class NavDrawer extends StatelessWidget {
                       ),
                     ),
             onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MyFind_Class()));
+                    Navigator.of(context).pop();
                   },        
           ),
           ListTile(

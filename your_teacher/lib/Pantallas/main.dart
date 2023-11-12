@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'package:your_teacher/find_Class.dart';
-
-import 'package:your_teacher/Pantallas/login.dart';
-import '../AccesoDatos/firebase_options.dart';
-
+import 'package:your_teacher/Pantallas/homePage.dart';
+import 'package:your_teacher/AccesoDatos/firebase_options.dart';
 
 
 void main() async {
@@ -25,8 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(      
       theme: ThemeData(colorSchemeSeed:  Color.fromARGB(255, 62, 103, 215), useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      title: 'Buscar Clase',      
-      home: MyFind_Class(),
+      title: 'Home',      
+      home: MyHomePage(),
       
     );
   }

@@ -4,6 +4,7 @@ import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:your_teacher/Dominios/user.dart';
+import 'package:your_teacher/Pantallas/widget/BottomNavigationBar.dart';
 
 class MyFind_Class extends StatefulWidget {
   const MyFind_Class({Key? key});
@@ -22,8 +23,8 @@ class _MyFind_ClassState extends State<MyFind_Class> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(           
-      backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
+    return Scaffold(               
+      backgroundColor: const Color.fromRGBO(247, 225, 180, 1),      
       body: Center(
         child: Container(
             decoration: BoxDecoration(
@@ -206,9 +207,9 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                             teachersFilter: List.generate(
                                     20,
                                     (i) => User(
-                                     uid:'Todo $i',
-                                     email: 'A description of what needs to be done for Todo $i',
-                                     displayName:'A description of what needs to be done for Todo $i',
+                                     uid:'$i',
+                                     email: 'email$i@gmail.com',
+                                     displayName:'Florencia Saravia $i',
                                      photoURL:'A description of what needs to be done for Todo $i',
                                      userType: UserType.profesor,
                                     ),
@@ -223,6 +224,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
             
         ),                
       ),
+     // bottomNavigationBar: BottomNavigation(),
     );
   }
 }
