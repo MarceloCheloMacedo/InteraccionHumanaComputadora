@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:your_teacher/Pantallas/login.dart';
 import '../AccesoDatos/firebase_options.dart';
 import '../AccesoDatos/firebase_service.dart';
 import '../Dominios/User.dart';
+
+import 'package:your_teacher/Pantallas/homePage.dart';
+import 'package:your_teacher/AccesoDatos/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -35,10 +39,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+          colorSchemeSeed: Color.fromARGB(255, 62, 103, 215),
+          useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      title: 'Loggin',
-      home: MyLoggin(),
+      title: 'Home',
+      home: MyHomePage(),
     );
   }
 }
