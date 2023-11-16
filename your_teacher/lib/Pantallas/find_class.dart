@@ -4,7 +4,6 @@ import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:your_teacher/Dominios/user.dart';
-import 'package:your_teacher/Pantallas/widget/BottomNavigationBar.dart';
 
 class MyFind_Class extends StatefulWidget {
   const MyFind_Class({Key? key});
@@ -50,7 +49,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                 const Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.0),
                 child: Text(''),
-              ),                      
+                ),                      
                 CSCPicker(
                   ///Enable disable state dropdown [OPTIONAL PARAMETER]
                   showStates: true,

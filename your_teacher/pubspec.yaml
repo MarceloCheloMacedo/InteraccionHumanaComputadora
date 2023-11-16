@@ -43,7 +43,10 @@ dependencies:
   date_field: ^3.0.5
   intl: ^0.18.1  
   csc_picker: ^0.2.7
-  
+  time_range_picker: ^2.2.0
+
+  flutter_localizations:
+    sdk: flutter  
  
 dependency_overrides:
   firebase_core_platform_interface: 5.0.0
