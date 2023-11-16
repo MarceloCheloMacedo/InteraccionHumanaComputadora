@@ -12,42 +12,42 @@ class Available_Lessons extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(246, 243, 233, 1),
-        title: 
-          Text(
-              'CLASES DISPONIBLES',
-              style: TextStyle(
-                fontSize: 30.0,
-                fontFamily: 'NerkoOne',
-              ),    
-            ),      
-          ),      
+        title: Text(
+          'CLASES DISPONIBLES',
+          style: TextStyle(
+            fontSize: 30.0,
+            fontFamily: 'NerkoOne',
+          ),
+        ),
+      ),
       body: ListView.builder(
         itemCount: teachersFilter.length,
         itemBuilder: (context, index) {
-          return  Card(
-                    color: Color.fromRGBO(246, 243, 233, 1),
-                    child: ListTile(
-                    leading: FlutterLogo(size: 56.0),
-                    title:Text(teachersFilter[index].displayName,
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontFamily: 'NerkoOne',
-                            ),
-                          ),
-                    subtitle: Text(teachersFilter[index].email,
-                                style: TextStyle(
-                                  fontSize: 19.0,
-                                  fontFamily: 'NerkoOne',
-                                ),
-                              ),          
-                    trailing: Icon(Icons.check_rounded,
-                                    size:35.0 ,
-                                    color: Colors.green[700],
-                                    
-                                  ),          
-                    onTap: () => _dialogBuilder(context),
-                    )
-                  );
+          return Card(
+              color: Color.fromRGBO(246, 243, 233, 1),
+              child: ListTile(
+                leading: FlutterLogo(size: 56.0),
+                title: Text(
+                  teachersFilter[index].nombre,
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontFamily: 'NerkoOne',
+                  ),
+                ),
+                subtitle: Text(
+                  teachersFilter[index].correo,
+                  style: TextStyle(
+                    fontSize: 19.0,
+                    fontFamily: 'NerkoOne',
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.check_rounded,
+                  size: 35.0,
+                  color: Colors.green[700],
+                ),
+                onTap: () => _dialogBuilder(context),
+              ));
         },
       ),
     );
@@ -98,8 +98,8 @@ class Available_Lessons extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  print(teachersFilter[0].displayName);
-                  print(teachersFilter[0].email);
+                  print(teachersFilter[0].nombre);
+                  print(teachersFilter[0].correo);
                   print(teachersFilter[0].uid);
                   Navigator.push(
                       context,
