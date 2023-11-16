@@ -17,7 +17,6 @@ Future<List<User>> getPeople() async {
 
     if (userData != null) {
       User user = User(
-        uid: userData['uid'] ?? '',
         correo: userData['correo'] ?? '',
         nombre: userData['nombre'] ?? '',
         apellido: userData['apellido'] ?? '',
@@ -38,7 +37,6 @@ Future<void> insertUser(User user) async {
 
   if (personaExiste) {
     await usersCollection.doc(user.correo).update({
-      'uid': user.uid,
       'correo': user.correo,
       'nombre': user.nombre,
       'apellido': user.apellido,
@@ -48,7 +46,6 @@ Future<void> insertUser(User user) async {
     });
   } else {
     await usersCollection.add({
-      'uid': user.uid,
       'correo': user.correo,
       'nombre': user.nombre,
       'apellido': user.apellido,
