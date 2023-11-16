@@ -19,45 +19,30 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Registro"),
+        title: const Text("Registro"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: "Email"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Por favor, ingrese un email válido";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _email = value;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Nombre"),
-                onSaved: (value) {
-                  _firstName = value;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Apellido"),
-                onSaved: (value) {
-                  _lastName = value;
-                },
-              ),
+              _buildTextField("Email", Icons.email, (value) {
+                _email = value;
+              }),
+              _buildTextField("Nombre", Icons.person, (value) {
+                _firstName = value;
+              }),
+              _buildTextField("Apellido", Icons.person, (value) {
+                _lastName = value;
+              }),
               ElevatedButton(
                 onPressed: () {
                   _selectDate(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(
-                      16), // Aumenta el espacio para el texto
+                  padding: const EdgeInsets.all(16),
                 ),
                 child: Text(
                   _dateOfBirth != null
@@ -69,6 +54,7 @@ class _RegisterState extends State<Register> {
               if (_dateOfBirth != null)
                 Text("Fecha seleccionada: ${_dateOfBirth!.toLocal()}"
                     .split(' ')[0]),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -77,12 +63,38 @@ class _RegisterState extends State<Register> {
                     // También puedes utilizar _email, _firstName, _lastName, _dateOfBirth y _role.
                   }
                 },
-                child: Text("Finalizar Registro"),
+                child: const Text("Finalizar Registro"),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(
+    String labelText,
+    IconData? icon, // Añade un parámetro para el icono
+    FormFieldSetter<String>? onSaved,
+  ) {
+    return TextFormField(
+      decoration: InputDecoration(
+        hintText: labelText,
+        labelText: labelText,
+        suffixIcon: icon != null
+            ? Icon(icon)
+            : null, // Utiliza el icono si está presente
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+      ),
+      validator: (value) {
+        if (icon == Icons.mail && (value == null || value.isEmpty)) {
+          print("Por favor, ingrese un dato válido");
+        }
+        return null; // Siempre devuelve null para no bloquear la validación
+      },
+      onSaved: onSaved,
     );
   }
 
