@@ -64,6 +64,103 @@ Future<bool> existeUser(String correo) async {
   return queryPeople.docs.isNotEmpty;
 }
 
+Future<User?> getUserByEmail(String correo) async {
+  CollectionReference collectionReferencePeople = db.collection('people');
+  QuerySnapshot queryPeople =
+      await collectionReferencePeople.where('correo', isEqualTo: correo).get();
+
+  if (queryPeople.docs.isNotEmpty) {
+    Map<String, dynamic>? userData =
+        queryPeople.docs.first.data() as Map<String, dynamic>?;
+
+    if (userData != null) {
+      User user = User(
+        correo: userData['correo'] ?? '',
+        nombre: userData['nombre'] ?? '',
+        apellido: userData['apellido'] ?? '',
+        foto: userData['foto'] ?? '',
+        tipo: userData['tipo'] ?? '',
+        pais: userData['pais'] ?? '',
+      );
+
+      return user;
+    }
+  }
+
+  return null;
+}
+
+Future<List<User>> getAllTeachers() async {
+  CollectionReference collectionReferencePeople = db.collection('people');
+  QuerySnapshot queryPeople =
+      await collectionReferencePeople.where('tipo', isEqualTo: 'Teacher').get();
+
+  List<User> teachers = [];
+
+  queryPeople.docs.forEach((documento) {
+    Map<String, dynamic>? userData = documento.data() as Map<String, dynamic>?;
+
+    if (userData != null) {
+      User teacher = User(
+        correo: userData['correo'] ?? '',
+        nombre: userData['nombre'] ?? '',
+        apellido: userData['apellido'] ?? '',
+        foto: userData['foto'] ?? '',
+        tipo: userData['tipo'] ?? '',
+        pais: userData['pais'] ?? '',
+      );
+      teachers.add(teacher);
+    }
+  });
+
+  return teachers;
+}
+
+Future<List<User>> getUsersWithAvailability(String dia) async {
+  List<User> usersWithAvailability = [];
+
+  List<Disponibilidad> disponibilidades = await getDisponibilidades();
+
+  for (Disponibilidad disponibilidad in disponibilidades) {
+    String? attributeValue;
+    switch (dia) {
+      case 'domingo':
+        attributeValue = disponibilidad.domingo;
+        break;
+      case 'lunes':
+        attributeValue = disponibilidad.lunes;
+        break;
+      case 'martes':
+        attributeValue = disponibilidad.martes;
+        break;
+      case 'miercoles':
+        attributeValue = disponibilidad.miercoles;
+        break;
+      case 'jueves':
+        attributeValue = disponibilidad.jueves;
+        break;
+      case 'viernes':
+        attributeValue = disponibilidad.viernes;
+        break;
+      case 'sabado':
+        attributeValue = disponibilidad.sabado;
+        break;
+      default:
+        attributeValue = null;
+        break;
+    }
+
+    if (attributeValue != null) {
+      User? user = await getUserByEmail(disponibilidad.correo);
+      if (user != null) {
+        usersWithAvailability.add(user);
+      }
+    }
+  }
+
+  return usersWithAvailability;
+}
+
 //----------------------------------Empieza Disponibilidad----------------------------------------------------
 //--------------------------------------------------------------------------------------------------
 
