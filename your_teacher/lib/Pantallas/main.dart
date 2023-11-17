@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import '../AccesoDatos/Manage_Context.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:time_range_picker/time_range_picker.dart';
+import 'package:your_teacher/Pantallas/Available_Teacher.dart';
+import 'package:your_teacher/Pantallas/Available_Lessons.dart';
+
+import 'package:your_teacher/Pantallas/find_class.dart';
 
 import 'package:your_teacher/Pantallas/login.dart';
 import '../AccesoDatos/firebase_options.dart';
@@ -7,7 +15,9 @@ import '../AccesoDatos/firebase_service.dart';
 import '../Dominios/User.dart';
 
 import 'package:your_teacher/Pantallas/homePage.dart';
+import 'package:your_teacher/Pantallas/register.dart';
 import 'package:your_teacher/AccesoDatos/firebase_options.dart';
+import 'package:your_teacher/Pantallas/widget/MyTimeRange.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -15,23 +25,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); // Initialize Firebase with the DefaultFirebaseOptions
-
-  // Llamada a la función getPeople
-  List<User> people = await getPeople();
-  User userInsert = User(
-    correo: 'prueba@hotmail.com',
-    nombre: 'prueba',
-    apellido: 'apellido',
-    foto: 'fotofotofoto',
-    tipo: 'Teacher',
-    pais: 'Uruguay',
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: MyApp(),
+    ),
   );
-
-  insertUser(userInsert);
-  print(people.length);
-  print(7);
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -45,7 +44,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true),
       debugShowCheckedModeBanner: false,
       title: 'Home',
-      home: MyHomePage(),
+      home: Register(),
     );
   }
 }
