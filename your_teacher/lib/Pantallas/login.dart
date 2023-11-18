@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
 import 'package:your_teacher/Pantallas/register.dart';
 import 'package:flutter/material.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
+import 'package:provider/provider.dart';
 
 class MyLoggin extends StatefulWidget {
   const MyLoggin({Key? key});
@@ -141,8 +143,11 @@ class _MyLogginState extends State<MyLoggin> {
                   User? user = await _authHelper.signInWithEmailAndPassword(
                       email, password, context);
                   //  var user;
+                  //
                   print('Valor de una variable:');
                   if (user != null) {
+                    Provider.of<AppState>(context, listen: false)
+                        .setUsuarioLogeado(emailController.text ?? '');
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Inicio de sesión con Google exitoso'),
@@ -152,6 +157,9 @@ class _MyLogginState extends State<MyLoggin> {
                   }
                 },
               ),
+
+              // String? email =
+              //        Provider.of<AppState>(context).usuarioLogeado;
               const SizedBox(height: 5), // Agregar espacio entre los botones
               const Text('Not a member?',
                   style: TextStyle(
