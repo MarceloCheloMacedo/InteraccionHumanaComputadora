@@ -144,7 +144,7 @@ class _MyLogginState extends State<MyLoggin> {
                       email, password, context);
                   //  var user;
                   //
-                  print('Valor de una variable:');
+
                   if (user != null) {
                     Provider.of<AppState>(context, listen: false)
                         .setUsuarioLogeado(emailController.text ?? '');

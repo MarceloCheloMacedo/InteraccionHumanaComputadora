@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import '../Errores/authentication_errors.dart';
+import '../AccesoDatos/firebase_service.dart';
 
 class FirebaseAuthHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,7 +32,7 @@ class FirebaseAuthHelper {
   }
 
   Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, BuildContext context) async {
     try {
       final UserCredential authResult =
           await _auth.createUserWithEmailAndPassword(
@@ -40,7 +41,7 @@ class FirebaseAuthHelper {
       );
       return authResult.user;
     } catch (e) {
-      print("Error en registro con correo y contraseña: $e");
+      ErrorMessages.showAuthenticationErrorDialog(context, e);
       return null;
     }
   }
@@ -61,5 +62,9 @@ class FirebaseAuthHelper {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<List<User>> getUsersWithAvailability(String dia) async {
+    return await getUsersWithAvailability(dia);
   }
 }
