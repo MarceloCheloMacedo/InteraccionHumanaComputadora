@@ -124,25 +124,25 @@ Future<List<User>> getUsersWithAvailability(String dia) async {
   for (Disponibilidad disponibilidad in disponibilidades) {
     String? attributeValue;
     switch (dia) {
-      case 'domingo':
+      case 'Domingo':
         attributeValue = disponibilidad.domingo;
         break;
-      case 'lunes':
+      case 'Lunes':
         attributeValue = disponibilidad.lunes;
         break;
-      case 'martes':
+      case 'Martes':
         attributeValue = disponibilidad.martes;
         break;
-      case 'miercoles':
+      case 'Miercoles':
         attributeValue = disponibilidad.miercoles;
         break;
-      case 'jueves':
+      case 'Jueves':
         attributeValue = disponibilidad.jueves;
         break;
       case 'viernes':
         attributeValue = disponibilidad.viernes;
         break;
-      case 'sabado':
+      case 'Sabado':
         attributeValue = disponibilidad.sabado;
         break;
       default:
