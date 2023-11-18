@@ -194,6 +194,36 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
   return disponibilidades;
 }
 
+Future<Disponibilidad?> getDisponibilidadByCorreo(String correo) async {
+  CollectionReference collectionReferenceDisponibilidades =
+      db.collection('disponibilidades');
+  QuerySnapshot queryDisponibilidad =
+      await collectionReferenceDisponibilidades
+          .where('correo', isEqualTo: correo)
+          .get();
+
+  if (queryDisponibilidad.docs.isNotEmpty) {
+    Map<String, dynamic>? disponibilidadData =
+        queryDisponibilidad.docs.first.data() as Map<String, dynamic>?;
+
+    if (disponibilidadData != null) {
+      Disponibilidad disponibilidad = Disponibilidad(
+        correo: disponibilidadData['correo'] ?? '',
+        domingo: disponibilidadData['domingo'] ?? '',
+        lunes: disponibilidadData['lunes'] ?? '',
+        martes: disponibilidadData['martes'] ?? '',
+        miercoles: disponibilidadData['miercoles'] ?? '',
+        jueves: disponibilidadData['jueves'] ?? '',
+        viernes: disponibilidadData['viernes'] ?? '',
+        sabado: disponibilidadData['sabado'] ?? '',
+      );
+
+      return disponibilidad;
+    }
+  }
+  return null;
+}
+
 Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {
   CollectionReference disponibilidadesCollection =
       db.collection('disponibilidades');
