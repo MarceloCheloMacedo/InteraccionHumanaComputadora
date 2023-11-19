@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:your_teacher/Dominios/User.dart';
+import 'package:your_teacher/Dominios/user.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -116,7 +116,7 @@ Future<List<User>> getAllTeachers() async {
   return teachers;
 }
 
-Future<List<User>> getUsersWithAvailability(String dia) async {
+Future<List<User>> getUsersWithAvailability(String? dia) async {
   List<User> usersWithAvailability = [];
 
   List<Disponibilidad> disponibilidades = await getDisponibilidades();
@@ -150,7 +150,7 @@ Future<List<User>> getUsersWithAvailability(String dia) async {
         break;
     }
 
-    if (attributeValue != null) {
+    if (attributeValue != null && attributeValue != '') {
       User? user = await getUserByEmail(disponibilidad.correo);
       if (user != null) {
         usersWithAvailability.add(user);
@@ -168,7 +168,7 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
   List<Disponibilidad> disponibilidades = [];
 
   CollectionReference collectionReferenceDisponibilidades =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   QuerySnapshot queryDisponibilidades =
       await collectionReferenceDisponibilidades.get();
 
@@ -192,6 +192,36 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
   });
 
   return disponibilidades;
+}
+
+Future<Disponibilidad?> getDisponibilidadByCorreo(String correo) async {
+  CollectionReference collectionReferenceDisponibilidades =
+      db.collection('disponibilidad');
+  QuerySnapshot queryDisponibilidad =
+      await collectionReferenceDisponibilidades
+          .where('correo', isEqualTo: correo)
+          .get();
+
+  if (queryDisponibilidad.docs.isNotEmpty) {
+    Map<String, dynamic>? disponibilidadData =
+        queryDisponibilidad.docs.first.data() as Map<String, dynamic>?;
+
+    if (disponibilidadData != null) {
+      Disponibilidad disponibilidad = Disponibilidad(
+        correo: disponibilidadData['correo'] ?? '',
+        domingo: disponibilidadData['domingo'] ?? '',
+        lunes: disponibilidadData['lunes'] ?? '',
+        martes: disponibilidadData['martes'] ?? '',
+        miercoles: disponibilidadData['miercoles'] ?? '',
+        jueves: disponibilidadData['jueves'] ?? '',
+        viernes: disponibilidadData['viernes'] ?? '',
+        sabado: disponibilidadData['sabado'] ?? '',
+      );
+
+      return disponibilidad;
+    }
+  }
+  return null;
 }
 
 Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {

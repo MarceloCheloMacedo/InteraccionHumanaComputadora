@@ -2,10 +2,13 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
-import 'package:your_teacher/Logica/flutterMethods.dart';
+import 'package:your_teacher/Logica/flutterExtraMethods.dart';
 import 'package:csc_picker/csc_picker.dart';
-import 'package:your_teacher/Dominios/user.dart';
 import 'package:your_teacher/AccesoDatos/firebase_service.dart';
+import '../Dominios/user.dart';
+
+
+
 
 class MyFind_Class extends StatefulWidget {
   const MyFind_Class({Key? key});
@@ -16,8 +19,11 @@ class MyFind_Class extends StatefulWidget {
 }
 
 class _MyFind_ClassState extends State<MyFind_Class> {
+  //final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
+  final FirebaseGetHelper _getHelper = FirebaseGetHelper();
   String? daySelected = "";
   List<String> listDays = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +79,11 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                     value: e,
                   );
                 }).toList(),
-                onChanged: (daySelected) {},
+                onChanged: (e) {
+                   setState(() {
+                    daySelected = e;
+                  });
+                },
                 isDense: true,
                 isExpanded: true,
               ),
@@ -117,12 +127,12 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                   ),
                 ),
                 onPressed: () async {
-                  List<User> teachers = await getUsersWithAvailability(daySelected);
+                    List<User> teachers  = await _getHelper.getUsersWithAvailability(daySelected);//= new List.empty();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Available_Lessons(                            
-                                teachersFilter: teachers,
+                                teachersFilter: teachers, daySelected: daySelected,
                               )));
                 },
               ),

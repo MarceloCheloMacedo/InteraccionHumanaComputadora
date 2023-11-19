@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import '../Errores/authentication_errors.dart';
+import '../AccesoDatos/firebase_service.dart' as a;
+import '../Dominios/Disponibilidad.dart';
+
 
 class FirebaseAuthHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,7 +34,7 @@ class FirebaseAuthHelper {
   }
 
   Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, BuildContext context) async {
     try {
       final UserCredential authResult =
           await _auth.createUserWithEmailAndPassword(
@@ -40,7 +43,7 @@ class FirebaseAuthHelper {
       );
       return authResult.user;
     } catch (e) {
-      print("Error en registro con correo y contraseña: $e");
+      ErrorMessages.showAuthenticationErrorDialog(context, e);
       return null;
     }
   }
@@ -63,4 +66,23 @@ class FirebaseAuthHelper {
     await _auth.signOut();
   }
 
+  Future<List<User>> getUsersWithAvailability(String dia) async {
+    return await getUsersWithAvailability(dia);
+  }
+
+  Future<List<User>> insertDisponibilidad(Disponibilidad disponibilidad) async {
+    return await insertDisponibilidad(disponibilidad);
+  }
+
+  Future<bool> existeDisponibilidad(String correo) async {
+    return await existeDisponibilidad(correo);
+  }
+
+  Future<List<Disponibilidad>> getDisponibilidades() async {
+    return await getDisponibilidades();
+  }
+
+  Future<List<User>> getAllTeachers() async {
+    return await getAllTeachers();
+  }
 }

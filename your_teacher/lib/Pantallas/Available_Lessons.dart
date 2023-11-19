@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Dominios/user.dart';
+import 'package:your_teacher/Dominios/Disponibilidad.dart';
+import 'package:your_teacher/AccesoDatos/firebase_service.dart' as service;
+import 'package:your_teacher/Pantallas/widget/calendarScreen.dart';
 
 class Available_Lessons extends StatelessWidget {
-  const Available_Lessons({super.key, required this.teachersFilter});
+  const Available_Lessons({super.key, required this.teachersFilter, required this.daySelected});
   final List<User> teachersFilter;
+  final String? daySelected;
 
   @override
   Widget build(BuildContext context) {
+    Disponibilidad? dispo;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       appBar: AppBar(
@@ -46,12 +51,25 @@ class Available_Lessons extends StatelessWidget {
                   size: 35.0,
                   color: Colors.green[700],
                 ),
-                onTap: () => _dialogBuilder(context),
+                onTap: () async => {
+                  dispo = await service.getDisponibilidadByCorreo(teachersFilter[index].correo),
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>  CalendarScreen(userSelected: teachersFilter[index],disponibilidad: dispo, daySelected: daySelected,)))
+                },
               ));
         },
       ),
     );
   }
+
+
+
+
+
+
+
 
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
