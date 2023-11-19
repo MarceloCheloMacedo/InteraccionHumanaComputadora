@@ -72,4 +72,16 @@ class FirebaseAuthHelper {
   Future<List<User>> insertDisponibilidad(Disponibilidad disponibilidad) async {
     return await insertDisponibilidad(disponibilidad);
   }
+
+  Future<bool> existeDisponibilidad(String correo) async {
+    return await existeDisponibilidad(correo);
+  }
+
+  Future<List<Disponibilidad>> getDisponibilidades() async {
+    return await getDisponibilidades();
+  }
+
+  Future<List<User>> getAllTeachers() async {
+    return await getAllTeachers();
+  }
 }
