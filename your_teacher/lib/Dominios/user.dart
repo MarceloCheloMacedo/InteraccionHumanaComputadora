@@ -8,6 +8,7 @@ class User {
   final String foto;
   final String tipo;
   final String pais;
+  //final DateTime fechaNacimiento;
 
   User({
     this.uid,
@@ -17,6 +18,7 @@ class User {
     required this.foto,
     required this.tipo,
     required this.pais,
+    // required this.fechaNacimiento,
   });
 
   /*factory User.fromFirebaseUser(UserCredential userCredential) {
