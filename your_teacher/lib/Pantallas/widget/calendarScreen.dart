@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
 import 'package:your_teacher/Dominios/user.dart';
+import 'package:your_teacher/Pantallas/find_class.dart';
 
 class CalendarScreen extends StatelessWidget {
   @override
@@ -44,21 +45,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget _buildHourList() {
     // Simulación de horas del día
     List<String> hoursOfDay = List.generate(24, (index) => '$index:00');
+    List<bool> hoursOfDayBool = List.generate(24, (index) => false);
+    bool ocuped;
 
     return Expanded(
       child: ListView.builder(
         itemCount: hoursOfDay.length,
         itemBuilder: (context, index) {
+        ocuped = isHourOccupied(index,daySelected);
+        hoursOfDayBool[index] = ocuped;
           return ListTile(
             title: Text(hoursOfDay[index]),
             leading: Icon(
-              isHourOccupied(index,daySelected)
+              ocuped
                   ? Icons.event_busy
                   : Icons.event_available,
-              color: isHourOccupied(index,daySelected)
+              color: ocuped
                   ? Colors.red
                   : Colors.green,
             ),
+            onTap: () => _dialogBuilder(context,hoursOfDayBool[index]),
           );
         },
       ),
@@ -104,5 +110,122 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   bool isInRange(int hour, int ini, int fin){
     return !(hour>=ini && hour<=fin);
+  }
+}
+
+Future<void> _dialogBuilder(BuildContext context,bool ocuped) {
+
+    if(ocuped){
+        return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text(
+            'HORARIO NO DISPONIBLE!',
+            style: TextStyle(
+              color: Color.fromRGBO(35, 8, 113, 1),
+              fontSize: 25.0,
+              fontFamily: 'NerkoOne',
+            ),
+          ),
+          backgroundColor: const Color.fromRGBO(246, 243, 233, 1),
+          actions: <Widget>[
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(0, 191, 170, 1),
+                  fixedSize: const Size.fromWidth(100),
+                  padding: const EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        20.0), // Ajusta el valor para controlar la cantidad de redondeo
+                  ),
+                ),
+                child: const Text(
+                  'ACEPTAR',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontFamily: 'NerkoOne',
+                    shadows: [
+                      Shadow(
+                        color: Color.fromARGB(255, 110, 108,
+                            108), // Choose the color of the shadow
+                        blurRadius:
+                            10.0, // Adjust the blur radius for the shadow effect
+                        offset: Offset(0.0,
+                            4.0), // Set the horizontal and vertical offset for the shadow
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+    else{
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text(
+            'AGENDADO EXITOSAMENTE!',
+            style: TextStyle(
+              color: Color.fromRGBO(35, 8, 113, 1),
+              fontSize: 25.0,
+              fontFamily: 'NerkoOne',
+            ),
+          ),
+          backgroundColor: const Color.fromRGBO(246, 243, 233, 1),
+          actions: <Widget>[
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(0, 191, 170, 1),
+                  fixedSize: const Size.fromWidth(100),
+                  padding: const EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        20.0), // Ajusta el valor para controlar la cantidad de redondeo
+                  ),
+                ),
+                child: const Text(
+                  'ACEPTAR',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontFamily: 'NerkoOne',
+                    shadows: [
+                      Shadow(
+                        color: Color.fromARGB(255, 110, 108,
+                            108), // Choose the color of the shadow
+                        blurRadius:
+                            10.0, // Adjust the blur radius for the shadow effect
+                        offset: Offset(0.0,
+                            4.0), // Set the horizontal and vertical offset for the shadow
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyFind_Class()));
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
