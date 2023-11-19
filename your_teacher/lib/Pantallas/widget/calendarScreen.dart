@@ -25,45 +25,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
         title: Text('Calendario con horas del día'),
       ),
       body: Column(
-        children: [/*
-          TableCalendar(
-            calendarFormat: _calendarFormat,
-            focusedDay: _focusedDay,
-            firstDay: DateTime.utc(2023, 1, 1),
-            lastDay: DateTime.utc(2023, 12, 31),
-            selectedDayPredicate: (day) {
-              // Verifica si el día seleccionado está ocupado
-              return isDayOccupied(day);
-            },
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-              });
-            },
-          ),*/
+        children: [
           SizedBox(height: 20),
-         /* _selectedDay != null
+          daySelected != null
               ? _buildHourList()
-              : Text(userSelected.name),*/
+              : Text(userSelected.nombre),
         ],
       ),
     );
   }
-
+/*
   bool isDayOccupied(DateTime day) {
     // Simulación de horas ocupadas
     // Aquí deberías implementar tu lógica real para verificar si hay horas ocupadas en el día seleccionado
     return day.day == 20 && day.month == 11 && day.year == 2023;
   }
-
+*/
   Widget _buildHourList() {
     // Simulación de horas del día
     List<String> hoursOfDay = List.generate(24, (index) => '$index:00');
@@ -75,10 +52,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
           return ListTile(
             title: Text(hoursOfDay[index]),
             leading: Icon(
-              isHourOccupied(hoursOfDay[index])
+              isHourOccupied(index,daySelected)
                   ? Icons.event_busy
                   : Icons.event_available,
-              color: isHourOccupied(hoursOfDay[index])
+              color: isHourOccupied(index,daySelected)
                   ? Colors.red
                   : Colors.green,
             ),
@@ -88,10 +65,44 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
-  bool isHourOccupied(String hour) {
-    // Simulación de horas ocupadas
-    // Aquí deberías implementar tu lógica real para verificar si una hora está ocupada
-    // Puedes usar la hora seleccionada (_selectedDay) junto con la hora actual para realizar esta verificación
-    return hour == '9:00' || hour == '13:00' || hour == '18:00';
+  bool isHourOccupied(int hour,String? day) {
+
+    String?  d;
+    switch (day) {
+      case 'Domingo':
+        d = disponibilidad?.domingo;
+        break;
+      case 'Lunes':
+        d = disponibilidad?.lunes;
+        break;
+      case 'Martes':
+        d = disponibilidad?.martes;
+        break;
+      case 'Miercoles':
+        d = disponibilidad?.miercoles;
+        break;
+      case 'Jueves':
+        d = disponibilidad?.jueves;
+        break;
+      case 'viernes':
+        d = disponibilidad?.viernes;
+        break;
+      case 'Sabado':
+        d = disponibilidad?.sabado;
+        break;
+      default:
+        d = null;
+        break;
+    }
+
+    List<String>? dispo = d?.split('-');
+    String? iniHour = dispo?[0].split(':')[0];
+    String? finHour = dispo?[1].split(':')[0];
+
+    return isInRange(hour,int.parse(iniHour!), int.parse(finHour!));
+  }
+
+  bool isInRange(int hour, int ini, int fin){
+    return !(hour>=ini && hour<=fin);
   }
 }
