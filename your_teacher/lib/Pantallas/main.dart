@@ -44,11 +44,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true),
       debugShowCheckedModeBanner: false,
       title: 'Home',
-<<<<<<< HEAD
       home: Available_Teacher(),
-=======
-      home: Register(),
->>>>>>> 8103746d568b148b9accb67121bb71c111b5e9bb
     );
   }
 }

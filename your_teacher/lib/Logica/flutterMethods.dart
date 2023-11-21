@@ -84,4 +84,9 @@ class FirebaseAuthHelper {
   Future<List<User>> getAllTeachers() async {
     return await getAllTeachers();
   }
+
+  Future<Disponibilidad> getDisponibilidadByCorreos(String correo) async {
+    final Disponibilidad = await getDisponibilidadByCorreo(correo) ;
+    return Disponibilidad;
+  }
 }

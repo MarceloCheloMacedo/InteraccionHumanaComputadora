@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:your_teacher/Dominios/User.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
 
@@ -168,7 +169,7 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
   List<Disponibilidad> disponibilidades = [];
 
   CollectionReference collectionReferenceDisponibilidades =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   QuerySnapshot queryDisponibilidades =
       await collectionReferenceDisponibilidades.get();
 
@@ -194,9 +195,10 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
   return disponibilidades;
 }
 
-Future<Disponibilidad?> getDisponibilidadByCorreo(String correo) async {
+Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
+
   CollectionReference collectionReferenceDisponibilidades =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   QuerySnapshot queryDisponibilidad =
       await collectionReferenceDisponibilidades
           .where('correo', isEqualTo: correo)
@@ -205,7 +207,6 @@ Future<Disponibilidad?> getDisponibilidadByCorreo(String correo) async {
   if (queryDisponibilidad.docs.isNotEmpty) {
     Map<String, dynamic>? disponibilidadData =
         queryDisponibilidad.docs.first.data() as Map<String, dynamic>?;
-
     if (disponibilidadData != null) {
       Disponibilidad disponibilidad = Disponibilidad(
         correo: disponibilidadData['correo'] ?? '',
@@ -221,7 +222,17 @@ Future<Disponibilidad?> getDisponibilidadByCorreo(String correo) async {
       return disponibilidad;
     }
   }
-  return null;
+  Disponibilidad disponibilidad = Disponibilidad(
+        correo:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        domingo: TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        lunes:   TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        martes:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        miercoles: TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        jueves:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        viernes: TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+        sabado:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
+      );
+  return disponibilidad;
 }
 
 Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {

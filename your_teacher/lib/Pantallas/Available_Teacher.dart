@@ -1,8 +1,8 @@
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:your_teacher/Logica/flutterMethods.dart';
+import 'package:your_teacher/Dominios/Disponibilidad.dart';
 import 'package:time_range_picker/time_range_picker.dart';
+import 'package:your_teacher/Logica/flutterMethods.dart';
 
 class Available_Teacher extends StatefulWidget {
   const Available_Teacher({Key? key});
@@ -12,27 +12,67 @@ class Available_Teacher extends StatefulWidget {
 }
 
 class _Available_TeacherState extends State<Available_Teacher> {
-  final format = DateFormat.jm();
-  TimeOfDay startTimeMonday  = TimeOfDay(hour:9,minute:0);
-  TimeOfDay endTimeMonday    = TimeOfDay(hour:18,minute:0);
-  String monday = "";
-  TimeOfDay startTimeTuesday = TimeOfDay(hour:9,minute:0);
-  TimeOfDay endTimeTuesday   = TimeOfDay(hour:18,minute:0);
-  String tuesday = "";
-  TimeOfDay startTimeWednesday = TimeOfDay(hour:9,minute:0);
-  TimeOfDay endTimeWednesday   = TimeOfDay(hour:18,minute:0);
-  String wednesday = "";
-  TimeOfDay startTimeThursday  = TimeOfDay(hour:9,minute:0);
-  TimeOfDay endTimeThursday    = TimeOfDay(hour:18,minute:0);
-  String thursday = "";
-  TimeOfDay startTimeFriday    = TimeOfDay(hour:9,minute:0);
-  TimeOfDay endTimeFriday      = TimeOfDay(hour:18,minute:0); 
-  String friday = "";
-
   final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
+  final format = DateFormat.jm();
+  TimeOfDay startTimeMonday = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay endTimeMonday = TimeOfDay(hour: 18, minute: 0);
+  String monday = "";
+  TimeOfDay startTimeTuesday = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay endTimeTuesday = TimeOfDay(hour: 18, minute: 0);
+  String tuesday = "";
+  TimeOfDay startTimeWednesday = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay endTimeWednesday = TimeOfDay(hour: 18, minute: 0);
+  String wednesday = "";
+  TimeOfDay startTimeThursday = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay endTimeThursday = TimeOfDay(hour: 18, minute: 0);
+  String thursday = "";
+  TimeOfDay startTimeFriday = TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay endTimeFriday = TimeOfDay(hour: 18, minute: 0);
+  String friday = "";
+  String correo = "marcelo5411a@hotmail.com";
+  Disponibilidad? disponibilidadUsuario;
+  
+  @override
+  // ignore: must_call_super
+  initState() {
+    // ignore: avoid_print
+    print("initState Called");
+    _authHelper.getDisponibilidadByCorreos(correo).then(
+        (disponibilidadData) => disponibilidadUsuario = disponibilidadData );
+    
+  
+    startTimeMonday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.lunes.substring(0,2) ?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.lunes.substring(3,5) ?? "0"));
+    endTimeMonday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.lunes.substring(6,8) ?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.lunes.substring(9,11) ?? "0"));    
+    monday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
+
+    startTimeTuesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.martes.substring(0,2) ?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.martes.substring(3,5) ?? "0"));
+    monday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
+    endTimeTuesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.martes.substring(6,8) ?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.martes.substring(9,11) ?? "0"));
+    tuesday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
+    startTimeWednesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.miercoles.substring(0,2)?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.miercoles.substring(3,5)?? "0"));
+    endTimeWednesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.miercoles.substring(6,8)?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.miercoles.substring(9,11)?? "0"));
+    wednesday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
+    startTimeThursday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.jueves.substring(0,2)?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.jueves.substring(3,5)?? "0"));
+    endTimeThursday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.jueves.substring(6,8)?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.jueves.substring(9,11)?? "0"));
+    thursday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
+    startTimeFriday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.viernes.substring(0,2)?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.viernes.substring(3,5)?? "0"));
+    endTimeFriday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.viernes.substring(6,8)?? "0")
+                              , minute: int.parse(disponibilidadUsuario?.viernes.substring(9,11)?? "0"));
+    friday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
@@ -111,7 +151,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
                         ],
                       );
                     },
-                  );             
+                  );
                   setState(() {
                     if (result != null) {
                       monday = result.toString();
@@ -120,7 +160,8 @@ class _Available_TeacherState extends State<Available_Teacher> {
                 },
                 child: const Text('Ingresar Lunes'),
               ),
-              Text(monday,
+              Text(
+                monday,
                 style: TextStyle(
                   color: Color.fromRGBO(35, 8, 113, 1),
                   fontSize: 18.0,
@@ -191,7 +232,8 @@ class _Available_TeacherState extends State<Available_Teacher> {
                 },
                 child: const Text('Ingresar Martes'),
               ),
-              Text(tuesday,
+              Text(
+                tuesday,
                 style: TextStyle(
                   color: Color.fromRGBO(35, 8, 113, 1),
                   fontSize: 18.0,
@@ -262,7 +304,8 @@ class _Available_TeacherState extends State<Available_Teacher> {
                 },
                 child: const Text('Ingresar Miércoles'),
               ),
-              Text(wednesday,
+              Text(
+                wednesday,
                 style: TextStyle(
                   color: Color.fromRGBO(35, 8, 113, 1),
                   fontSize: 18.0,
@@ -333,7 +376,8 @@ class _Available_TeacherState extends State<Available_Teacher> {
                 },
                 child: const Text('Ingresar Jueves'),
               ),
-              Text(thursday,
+              Text(
+                thursday,
                 style: TextStyle(
                   color: Color.fromRGBO(35, 8, 113, 1),
                   fontSize: 18.0,
@@ -404,7 +448,8 @@ class _Available_TeacherState extends State<Available_Teacher> {
                 },
                 child: const Text('Ingresar Viernes'),
               ),
-              Text(friday,
+              Text(
+                friday,
                 style: TextStyle(
                   color: Color.fromRGBO(35, 8, 113, 1),
                   fontSize: 18.0,
@@ -444,8 +489,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
                     ],
                   ),
                 ),
-                onPressed: () async {                                      
-                },
+                onPressed: () async {},
               ),
             ],
           ),
