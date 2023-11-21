@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:your_teacher/Dominios/User.dart';
+import 'package:your_teacher/Dominios/user.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;

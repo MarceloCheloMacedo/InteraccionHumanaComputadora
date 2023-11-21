@@ -40,6 +40,13 @@ class FirebaseAuthHelper {
         email: email,
         password: password,
       );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Registro exitoso'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
       return authResult.user;
     } catch (e) {
       ErrorMessages.showAuthenticationErrorDialog(context, e);
