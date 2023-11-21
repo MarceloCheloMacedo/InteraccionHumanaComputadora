@@ -76,7 +76,7 @@ class FirebaseAuthHelper {
     return await getUsersWithAvailability(dia);
   }
 
-  Future<List<User>> insertDisponibilidad(Disponibilidad disponibilidad) async {
+  Future<void> insertDisponibilidades(Disponibilidad disponibilidad) async {
     return await insertDisponibilidad(disponibilidad);
   }
 

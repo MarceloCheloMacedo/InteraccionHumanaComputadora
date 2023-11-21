@@ -196,18 +196,17 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
 }
 
 Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
-
   CollectionReference collectionReferenceDisponibilidades =
       db.collection('disponibilidad');
-  QuerySnapshot queryDisponibilidad =
-      await collectionReferenceDisponibilidades
-          .where('correo', isEqualTo: correo)
-          .get();
+  QuerySnapshot queryDisponibilidad = await collectionReferenceDisponibilidades
+      .where('correo', isEqualTo: correo)
+      .get();
 
   if (queryDisponibilidad.docs.isNotEmpty) {
     Map<String, dynamic>? disponibilidadData =
         queryDisponibilidad.docs.first.data() as Map<String, dynamic>?;
     if (disponibilidadData != null) {
+      
       Disponibilidad disponibilidad = Disponibilidad(
         correo: disponibilidadData['correo'] ?? '',
         domingo: disponibilidadData['domingo'] ?? '',
@@ -222,22 +221,39 @@ Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
       return disponibilidad;
     }
   }
+  
   Disponibilidad disponibilidad = Disponibilidad(
-        correo:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        domingo: TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        lunes:   TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        martes:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        miercoles: TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        jueves:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        viernes: TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-        sabado:  TimeOfDay(hour: 9, minute: 0).toString() +'-' + TimeOfDay(hour: 18, minute: 0).toString(),
-      );
+    correo: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    domingo: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    lunes: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    martes: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    miercoles: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    jueves: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    viernes: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+    sabado: TimeOfDay(hour: 9, minute: 0).toString() +
+        '-' +
+        TimeOfDay(hour: 18, minute: 0).toString(),
+  );
   return disponibilidad;
 }
 
 Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {
   CollectionReference disponibilidadesCollection =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   bool disponibilidadExiste = await existeDisponibilidad(disponibilidad.correo);
 
   if (disponibilidadExiste) {
@@ -266,7 +282,7 @@ Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {
 
 Future<bool> existeDisponibilidad(String correo) async {
   CollectionReference collectionReferenceDisponibilidades =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   QuerySnapshot queryDisponibilidades =
       await collectionReferenceDisponibilidades
           .where('correo', isEqualTo: correo)
