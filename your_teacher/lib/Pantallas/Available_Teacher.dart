@@ -39,47 +39,14 @@ class _Available_TeacherState extends State<Available_Teacher> {
   @override
   // ignore: must_call_super
   initState() {
-    _gotoHomeScreen();
-    // ignore: avoid_print
-    print("initState Called");
-    /*  _authHelper.getDisponibilidadByCorreos(correo).then(
-        (disponibilidadData) => disponibilidadUsuario = disponibilidadData );
     
-  
-    startTimeMonday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.lunes.substring(0,2) ?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.lunes.substring(3,5) ?? "0"));
-    endTimeMonday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.lunes.substring(6,8) ?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.lunes.substring(9,11) ?? "0"));    
-    monday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
-
-    startTimeTuesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.martes.substring(0,2) ?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.martes.substring(3,5) ?? "0"));    
-    endTimeTuesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.martes.substring(6,8) ?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.martes.substring(9,11) ?? "0"));
-    tuesday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
-
-    startTimeWednesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.miercoles.substring(0,2)?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.miercoles.substring(3,5)?? "0"));
-    endTimeWednesday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.miercoles.substring(6,8)?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.miercoles.substring(9,11)?? "0"));
-    wednesday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
-
-    startTimeThursday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.jueves.substring(0,2)?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.jueves.substring(3,5)?? "0"));
-    endTimeThursday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.jueves.substring(6,8)?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.jueves.substring(9,11)?? "0"));
-    thursday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();
-
-    startTimeFriday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.viernes.substring(0,2)?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.viernes.substring(3,5)?? "0"));
-    endTimeFriday = TimeOfDay(hour: int.parse(disponibilidadUsuario?.viernes.substring(6,8)?? "0")
-                              , minute: int.parse(disponibilidadUsuario?.viernes.substring(9,11)?? "0"));
-    friday =  'Inicio :' + startTimeMonday.toString() +' Fin :' + endTimeMonday.toString();*/
+    _gotoHomeScreen();
+    // ignore: avoid_print        
   }
 
   @override
   Widget build(BuildContext context) {
-
+correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
@@ -514,7 +481,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
   }
 
   void _gotoHomeScreen() {
-    correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
+    
     _authHelper.getDisponibilidadByCorreos(correo).then((disponibilidadData) {
       setState(() {
         startTimeMonday = TimeOfDay(

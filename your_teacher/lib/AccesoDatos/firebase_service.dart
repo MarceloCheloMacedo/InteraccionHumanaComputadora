@@ -223,30 +223,30 @@ Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
   }
   
   Disponibilidad disponibilidad = Disponibilidad(
-    correo: TimeOfDay(hour: 9, minute: 0).toString() +
+    correo: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    domingo: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    domingo: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    lunes: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    lunes: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    martes: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    martes: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    miercoles: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    miercoles: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    jueves: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    jueves: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    viernes: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    viernes: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
-    sabado: TimeOfDay(hour: 9, minute: 0).toString() +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+    sabado: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString(),
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
   );
   return disponibilidad;
 }

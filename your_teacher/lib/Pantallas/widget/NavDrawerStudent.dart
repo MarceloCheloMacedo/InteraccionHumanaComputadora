@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 
 class NavDrawerStudent extends StatelessWidget {
@@ -27,7 +28,10 @@ class NavDrawerStudent extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Available_Teacher()))},
           ),
           ListTile(
             leading: Icon(Icons.perm_contact_calendar,size: 35,color:Colors.black,),
