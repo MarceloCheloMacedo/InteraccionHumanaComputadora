@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../Errores/authentication_errors.dart';
 import '../AccesoDatos/firebase_service.dart';
 import '../Dominios/Disponibilidad.dart';
+import '../Dominios/user.dart';
 
 class FirebaseAuthHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -32,18 +33,20 @@ class FirebaseAuthHelper {
     }
   }
 
-  Future<User?> signUpWithEmailAndPassword(
-      String email, String password, BuildContext context) async {
+  Future<User?> signUpWithEmailAndPassword(String email, String password,
+      BuildContext context, UserD userNew) async {
     try {
       final UserCredential authResult =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      insertUser(userNew);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Registro exitoso'),
           backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
         ),
       );
 
@@ -72,7 +75,7 @@ class FirebaseAuthHelper {
     await _auth.signOut();
   }
 
-  Future<List<User>> getUsersWithAvailability(String dia) async {
+  Future<List<UserD>> getUsersWithAvailability(String dia) async {
     return await getUsersWithAvailability(dia);
   }
 
@@ -88,12 +91,12 @@ class FirebaseAuthHelper {
     return await getDisponibilidades();
   }
 
-  Future<List<User>> getAllTeachers() async {
+  Future<List<UserD>> getAllTeachers() async {
     return await getAllTeachers();
   }
 
   Future<Disponibilidad> getDisponibilidadByCorreos(String correo) async {
-    final Disponibilidad = await getDisponibilidadByCorreo(correo) ;
+    final Disponibilidad = await getDisponibilidadByCorreo(correo);
     return Disponibilidad;
   }
 }

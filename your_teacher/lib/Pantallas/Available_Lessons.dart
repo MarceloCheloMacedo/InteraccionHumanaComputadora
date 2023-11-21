@@ -4,7 +4,7 @@ import 'package:your_teacher/Dominios/user.dart';
 
 class Available_Lessons extends StatelessWidget {
   const Available_Lessons({super.key, required this.teachersFilter});
-  final List<User> teachersFilter;
+  final List<UserD> teachersFilter;
 
   @override
   Widget build(BuildContext context) {

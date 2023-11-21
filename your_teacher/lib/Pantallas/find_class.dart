@@ -205,7 +205,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                           builder: (context) => Available_Lessons(
                                 teachersFilter: List.generate(
                                   20,
-                                  (i) => User(
+                                  (i) => UserD(
                                     correo: 'email$i@gmail.com',
                                     nombre: 'Florencia Saravia $i',
                                     apellido: 'Martínez',
@@ -213,7 +213,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                                         'A description of what needs to be done for Todo $i',
                                     tipo: 'Profesor',
                                     pais: 'Uruguay',
-                                    //fechaNacimiento: DateTime.now(),
+                                    fechaNacimiento: DateTime.now(),
                                   ),
                                 ),
                               )));

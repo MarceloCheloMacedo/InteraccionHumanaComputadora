@@ -1,9 +1,11 @@
 import 'package:date_field/date_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:your_teacher/AccesoDatos/firebase_service.dart';
 import 'package:your_teacher/Dominios/user.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:csc_picker/csc_picker.dart';
+import 'package:your_teacher/Pantallas/login.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key});
@@ -317,9 +319,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   onPressed: () async {
-                    helperAuth.signUpWithEmailAndPassword(
-                        emailController.text, passwordController.text, context);
-
                     String nombre = nameController.text;
                     String apellido = lastNameController.text;
 
@@ -329,17 +328,34 @@ class _RegisterState extends State<Register> {
                     String email = emailController.text;
                     String password = passwordController.text;
 
-                    User newUser = User(
+                    UserD newUser = UserD(
                       correo: email,
                       nombre: nombre,
                       apellido: apellido,
                       foto: "",
                       tipo: tipoCuenta,
                       pais: paisNacimiento,
-                      //fechaNacimiento: DateTime.parse(_dateOfBirth),
+                      fechaNacimiento: DateTime.parse(_dateOfBirth),
                     );
 
-                    // insertUser(newUser);
+                    User? userFirebase =
+                        await helperAuth.signUpWithEmailAndPassword(
+                            emailController.text,
+                            passwordController.text,
+                            context,
+                            newUser);
+
+                    if (userFirebase != null) {
+                      // El usuario se registró con éxito, redirige a otra página.
+                      await Future.delayed(Duration(seconds: 2));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyLoggin(),
+                        ),
+                      );
+                    }
+                    ;
                   },
                   child: const Text(
                     'Finalizar registro',
