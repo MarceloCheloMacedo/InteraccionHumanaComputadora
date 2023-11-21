@@ -6,8 +6,8 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 //----------------------------------Empieza User----------------------------------------------------
 //--------------------------------------------------------------------------------------------------
 
-Future<List<User>> getPeople() async {
-  List<User> people = [];
+Future<List<UserD>> getPeople() async {
+  List<UserD> people = [];
 
   CollectionReference collectionReferencePeople = db.collection('people');
   QuerySnapshot queryPeople = await collectionReferencePeople.get();
@@ -16,13 +16,14 @@ Future<List<User>> getPeople() async {
     Map<String, dynamic>? userData = documento.data() as Map<String, dynamic>?;
 
     if (userData != null) {
-      User user = User(
+      UserD user = UserD(
         correo: userData['correo'] ?? '',
         nombre: userData['nombre'] ?? '',
         apellido: userData['apellido'] ?? '',
         foto: userData['foto'] ?? '',
         tipo: userData['tipo'] ?? '',
         pais: userData['pais'] ?? '',
+        fechaNacimiento: userData['fechaNacimiento'] ?? '',
       );
       people.add(user);
     }
@@ -31,7 +32,7 @@ Future<List<User>> getPeople() async {
   return people;
 }
 
-Future<void> insertUser(User user) async {
+Future<void> insertUser(UserD user) async {
   CollectionReference usersCollection = db.collection('people');
   bool personaExiste = await existeUser(user.correo);
 
@@ -43,6 +44,7 @@ Future<void> insertUser(User user) async {
       'foto': user.foto,
       'tipo': user.tipo,
       'pais': user.pais,
+      'fechaNacimiento': user.fechaNacimiento,
     });
   } else {
     await usersCollection.add({
@@ -52,6 +54,7 @@ Future<void> insertUser(User user) async {
       'foto': user.foto,
       'tipo': user.tipo,
       'pais': user.pais,
+      'fechaNacimiento': user.fechaNacimiento,
     });
   }
 }
@@ -64,7 +67,7 @@ Future<bool> existeUser(String correo) async {
   return queryPeople.docs.isNotEmpty;
 }
 
-Future<User?> getUserByEmail(String correo) async {
+Future<UserD?> getUserByEmail(String correo) async {
   CollectionReference collectionReferencePeople = db.collection('people');
   QuerySnapshot queryPeople =
       await collectionReferencePeople.where('correo', isEqualTo: correo).get();
@@ -74,13 +77,14 @@ Future<User?> getUserByEmail(String correo) async {
         queryPeople.docs.first.data() as Map<String, dynamic>?;
 
     if (userData != null) {
-      User user = User(
+      UserD user = UserD(
         correo: userData['correo'] ?? '',
         nombre: userData['nombre'] ?? '',
         apellido: userData['apellido'] ?? '',
         foto: userData['foto'] ?? '',
         tipo: userData['tipo'] ?? '',
         pais: userData['pais'] ?? '',
+        fechaNacimiento: userData['fechaNacimiento'] ?? '',
       );
 
       return user;
@@ -90,24 +94,25 @@ Future<User?> getUserByEmail(String correo) async {
   return null;
 }
 
-Future<List<User>> getAllTeachers() async {
+Future<List<UserD>> getAllTeachers() async {
   CollectionReference collectionReferencePeople = db.collection('people');
   QuerySnapshot queryPeople =
       await collectionReferencePeople.where('tipo', isEqualTo: 'Teacher').get();
 
-  List<User> teachers = [];
+  List<UserD> teachers = [];
 
   queryPeople.docs.forEach((documento) {
     Map<String, dynamic>? userData = documento.data() as Map<String, dynamic>?;
 
     if (userData != null) {
-      User teacher = User(
+      UserD teacher = UserD(
         correo: userData['correo'] ?? '',
         nombre: userData['nombre'] ?? '',
         apellido: userData['apellido'] ?? '',
         foto: userData['foto'] ?? '',
         tipo: userData['tipo'] ?? '',
         pais: userData['pais'] ?? '',
+        fechaNacimiento: userData['fechaNacimiento'] ?? '',
       );
       teachers.add(teacher);
     }
@@ -116,8 +121,8 @@ Future<List<User>> getAllTeachers() async {
   return teachers;
 }
 
-Future<List<User>> getUsersWithAvailability(String dia) async {
-  List<User> usersWithAvailability = [];
+Future<List<UserD>> getUsersWithAvailability(String dia) async {
+  List<UserD> usersWithAvailability = [];
 
   List<Disponibilidad> disponibilidades = await getDisponibilidades();
 
@@ -151,7 +156,7 @@ Future<List<User>> getUsersWithAvailability(String dia) async {
     }
 
     if (attributeValue != null) {
-      User? user = await getUserByEmail(disponibilidad.correo);
+      UserD? user = await getUserByEmail(disponibilidad.correo);
       if (user != null) {
         usersWithAvailability.add(user);
       }
@@ -168,7 +173,7 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
   List<Disponibilidad> disponibilidades = [];
 
   CollectionReference collectionReferenceDisponibilidades =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   QuerySnapshot queryDisponibilidades =
       await collectionReferenceDisponibilidades.get();
 
@@ -196,19 +201,28 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
 
 Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {
   CollectionReference disponibilidadesCollection =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   bool disponibilidadExiste = await existeDisponibilidad(disponibilidad.correo);
 
   if (disponibilidadExiste) {
-    await disponibilidadesCollection.doc(disponibilidad.correo).update({
-      'domingo': disponibilidad.domingo,
-      'lunes': disponibilidad.lunes,
-      'martes': disponibilidad.martes,
-      'miercoles': disponibilidad.miercoles,
-      'jueves': disponibilidad.jueves,
-      'viernes': disponibilidad.viernes,
-      'sabado': disponibilidad.sabado,
-    });
+    QuerySnapshot query = await disponibilidadesCollection
+        .where('correo', isEqualTo: disponibilidad.correo)
+        .get();
+    if (query.docs.isNotEmpty) {
+      // Utiliza el primer documento encontrado con el correo específico
+      var docId = query.docs.first.id;
+
+      await disponibilidadesCollection.doc(docId).update({
+        'correo': disponibilidad.correo,
+        'domingo': disponibilidad.domingo,
+        'lunes': disponibilidad.lunes,
+        'martes': disponibilidad.martes,
+        'miercoles': disponibilidad.miercoles,
+        'jueves': disponibilidad.jueves,
+        'viernes': disponibilidad.viernes,
+        'sabado': disponibilidad.sabado,
+      });
+    }
   } else {
     await disponibilidadesCollection.add({
       'correo': disponibilidad.correo,
@@ -225,7 +239,7 @@ Future<void> insertDisponibilidad(Disponibilidad disponibilidad) async {
 
 Future<bool> existeDisponibilidad(String correo) async {
   CollectionReference collectionReferenceDisponibilidades =
-      db.collection('disponibilidades');
+      db.collection('disponibilidad');
   QuerySnapshot queryDisponibilidades =
       await collectionReferenceDisponibilidades
           .where('correo', isEqualTo: correo)
