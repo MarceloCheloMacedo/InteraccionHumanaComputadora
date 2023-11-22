@@ -467,10 +467,9 @@ class _Available_TeacherState extends State<Available_Teacher> {
                   ),
                 ),
                 onPressed: () async {
-               
                   _authHelper.insertDisponibilidades(Disponibilidad(
                       correo: correo,
-                      domingo: "",                      
+                      domingo: "",
                       lunes: monday.substring(8, 13) +
                           "-" +
                           monday.substring(21, 26),

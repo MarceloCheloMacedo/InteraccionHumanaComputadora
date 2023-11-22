@@ -23,7 +23,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  ); // Initialize Firebase with the DefaultFirebaseOptions  
+  ); // Initialize Firebase with the DefaultFirebaseOptions
 
   runApp(
     ChangeNotifierProvider(
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true),
       debugShowCheckedModeBanner: false,
       title: 'Home',
-      home: MyFind_Class(),
+      home: MyLoggin(),
     );
   }
 }
