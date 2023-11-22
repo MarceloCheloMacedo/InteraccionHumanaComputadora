@@ -85,7 +85,7 @@ Future<UserD?> getUserByEmail(String correo) async {
         foto: userData['foto'] ?? '',
         tipo: userData['tipo'] ?? '',
         pais: userData['pais'] ?? '',
-        fechaNacimiento: userData['fechaNacimiento'] ?? '',
+        fechaNacimiento: new DateTime.fromMicrosecondsSinceEpoch(userData['fechaNacimiento']),
       );
 
       return user;
