@@ -9,7 +9,8 @@ import 'package:your_teacher/Pantallas/homePage.dart';
 import 'package:your_teacher/Pantallas/widget/NavDrawerStudentTeacher.dart';
 
 class Available_Teacher extends StatefulWidget {
-  const Available_Teacher({Key? key});
+  final String mail;
+  const Available_Teacher({Key? key, required this.mail}) : super(key: key);
 
   @override
   State<Available_Teacher> createState() => _Available_TeacherState();
@@ -44,7 +45,8 @@ class _Available_TeacherState extends State<Available_Teacher> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+       
     correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
     return Scaffold(
       drawer: NavDrawerStudentTeacher(),
@@ -53,19 +55,20 @@ class _Available_TeacherState extends State<Available_Teacher> {
       ),
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
-        child: SingleChildScrollView( 
-        child: Container(
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(246, 243, 233, 1),
-            border: Border.all(
-              width: 1,
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(246, 243, 233, 1),
+              border: Border.all(
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(12),
             ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-          margin: const EdgeInsets.all(40.0),
-          height: 750,                   
-            child:Column(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            margin: const EdgeInsets.all(40.0),
+            height: 700,
+            child: Column(
               children: [
                 Text(
                   'INDICAR DISPONIBILIDAD',
@@ -121,7 +124,9 @@ class _Available_TeacherState extends State<Available_Teacher> {
                               child: const Text('OK'),
                               onPressed: () {
                                 Navigator.of(context).pop('Inicio: ' +
-                                    startTimeMonday.toString().substring(10, 15) +
+                                    startTimeMonday
+                                        .toString()
+                                        .substring(10, 15) +
                                     '   Fin: ' +
                                     endTimeMonday.toString().substring(10, 15));
                               },
@@ -196,7 +201,9 @@ class _Available_TeacherState extends State<Available_Teacher> {
                                         .toString()
                                         .substring(10, 15) +
                                     '   Fin: ' +
-                                    endTimeTuesday.toString().substring(10, 15));
+                                    endTimeTuesday
+                                        .toString()
+                                        .substring(10, 15));
                               },
                             ),
                           ],
@@ -344,7 +351,9 @@ class _Available_TeacherState extends State<Available_Teacher> {
                                         .toString()
                                         .substring(10, 15) +
                                     '   Fin: ' +
-                                    endTimeThursday.toString().substring(10, 15));
+                                    endTimeThursday
+                                        .toString()
+                                        .substring(10, 15));
                               },
                             ),
                           ],
@@ -414,7 +423,9 @@ class _Available_TeacherState extends State<Available_Teacher> {
                               child: const Text('OK'),
                               onPressed: () {
                                 Navigator.of(context).pop('Inicio: ' +
-                                    startTimeFriday.toString().substring(10, 15) +
+                                    startTimeFriday
+                                        .toString()
+                                        .substring(10, 15) +
                                     '   Fin: ' +
                                     endTimeFriday.toString().substring(10, 15));
                               },
@@ -473,10 +484,9 @@ class _Available_TeacherState extends State<Available_Teacher> {
                     ),
                   ),
                   onPressed: () async {
-                
                     _authHelper.insertDisponibilidades(Disponibilidad(
                         correo: correo,
-                        domingo: "",                      
+                        domingo: "",
                         lunes: monday.substring(8, 13) +
                             "-" +
                             monday.substring(21, 26),
@@ -505,7 +515,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
   }
 
   void _gotoHomeScreen() {
-    _authHelper.getDisponibilidadByCorreos(correo).then((disponibilidadData) {
+    _authHelper.getDisponibilidadByCorreos(widget.mail).then((disponibilidadData) {
       setState(() {
         startTimeMonday = TimeOfDay(
             hour: int.parse(disponibilidadData.lunes.substring(0, 2)),

@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true),
       debugShowCheckedModeBanner: false,
       title: 'Home',
-      home: MyFind_Class(),
+      home: MyLoggin(),
     );
   }
 }
