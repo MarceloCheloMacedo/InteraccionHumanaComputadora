@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
-import 'package:your_teacher/Pantallas/widget/NavDrawerStudent.dart';
+import 'package:your_teacher/Pantallas/widget/NavDrawerStudentTeacher.dart';
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class MyHomePage extends StatelessWidget {
     String? correo = Provider.of<AppState>(context).usuarioLogeado?.correo;
 
     return Scaffold(
-      drawer: NavDrawerStudent(),
+      drawer: NavDrawerStudentTeacher(),
       appBar: AppBar(
         title: Text(''),
       ),

@@ -77,8 +77,8 @@ class FirebaseAuthHelper {
     await _auth.signOut();
   }
 
-  Future<List<UserD>> getUsersWithAvailability(String dia) async {
-    return await getUsersWithAvailability(dia);
+  Future<List<UserD>> getUsersWithAvailability(String? dia) async {
+    return await a.getUsersWithAvailability(dia!);
   }
 
   Future<void> insertDisponibilidades(Disponibilidad disponibilidad) async {

@@ -1,6 +1,7 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Logica/flutterExtraMethods.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -19,8 +20,8 @@ class MyFind_Class extends StatefulWidget {
 }
 
 class _MyFind_ClassState extends State<MyFind_Class> {
-  //final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
-  final FirebaseGetHelper _getHelper = FirebaseGetHelper();
+  final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
+  //final FirebaseGetHelper _getHelper = FirebaseGetHelper();
   String? daySelected = "";
   List<String> listDays = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
 
@@ -127,7 +128,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                   ),
                 ),
                 onPressed: () async {
-                    List<UserD> teachers  = await _getHelper.getUsersWithAvailability(daySelected);//= new List.empty();
+                    List<UserD> teachers  = await _authHelper.getUsersWithAvailability(daySelected);//= new List.empty();
                   Navigator.push(
                       context,
                       MaterialPageRoute(

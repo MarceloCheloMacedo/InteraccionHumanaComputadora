@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
+import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Pantallas/login.dart';
 
-class NavDrawer extends StatelessWidget {
+class NavDrawerStudentTeacher extends StatelessWidget {
   bool isTeacher = false;
+
   @override
   Widget build(BuildContext context) {
+      String? userType = Provider.of<AppState>(context).usuarioLogeado?.tipo;
+      if(userType == 'Profesor')
+        isTeacher = true;
+      else
+        isTeacher = false;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -29,7 +38,10 @@ class NavDrawer extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Available_Teacher()))},
           ),
           isTeacher?
           ListTile(
