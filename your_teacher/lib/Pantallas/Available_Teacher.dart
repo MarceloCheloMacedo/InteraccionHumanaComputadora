@@ -15,7 +15,6 @@ class Available_Teacher extends StatefulWidget {
 }
 
 class _Available_TeacherState extends State<Available_Teacher> {
- 
   final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
   final format = DateFormat.jm();
   TimeOfDay startTimeMonday = TimeOfDay(hour: 9, minute: 0);
@@ -39,14 +38,13 @@ class _Available_TeacherState extends State<Available_Teacher> {
   @override
   // ignore: must_call_super
   initState() {
-    
     _gotoHomeScreen();
-    // ignore: avoid_print        
+    // ignore: avoid_print
   }
 
   @override
   Widget build(BuildContext context) {
-correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
+    correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
@@ -116,10 +114,10 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
                           TextButton(
                             child: const Text('OK'),
                             onPressed: () {
-                              Navigator.of(context).pop('Inicio :' +
-                                  startTimeMonday.toString().substring(10,15) +
-                                  ' Fin :' +
-                                  endTimeMonday.toString().substring(10,15));
+                              Navigator.of(context).pop('Inicio: ' +
+                                  startTimeMonday.toString().substring(10, 15) +
+                                  '   Fin: ' +
+                                  endTimeMonday.toString().substring(10, 15));
                             },
                           ),
                         ],
@@ -187,10 +185,12 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
                           TextButton(
                             child: const Text('OK'),
                             onPressed: () {
-                              Navigator.of(context).pop('Inicio :' +
-                                  startTimeTuesday.toString().substring(10,15) +
-                                  ' Fin :' +
-                                  endTimeTuesday.toString().substring(10,15));
+                              Navigator.of(context).pop('Inicio: ' +
+                                  startTimeTuesday
+                                      .toString()
+                                      .substring(10, 15) +
+                                  '   Fin: ' +
+                                  endTimeTuesday.toString().substring(10, 15));
                             },
                           ),
                         ],
@@ -258,10 +258,14 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
                           TextButton(
                             child: const Text('OK'),
                             onPressed: () {
-                              Navigator.of(context).pop('Inicio :' +
-                                  startTimeWednesday.toString().substring(10,15) +
-                                  ' Fin :' +
-                                  endTimeWednesday.toString().substring(10,15));
+                              Navigator.of(context).pop('Inicio: ' +
+                                  startTimeWednesday
+                                      .toString()
+                                      .substring(10, 15) +
+                                  '   Fin: ' +
+                                  endTimeWednesday
+                                      .toString()
+                                      .substring(10, 15));
                             },
                           ),
                         ],
@@ -329,10 +333,12 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
                           TextButton(
                             child: const Text('OK'),
                             onPressed: () {
-                              Navigator.of(context).pop('Inicio :' +
-                                  startTimeThursday.toString().substring(10,15) +
-                                  ' Fin :' +
-                                  endTimeThursday.toString().substring(10,15));
+                              Navigator.of(context).pop('Inicio: ' +
+                                  startTimeThursday
+                                      .toString()
+                                      .substring(10, 15) +
+                                  '   Fin: ' +
+                                  endTimeThursday.toString().substring(10, 15));
                             },
                           ),
                         ],
@@ -401,10 +407,10 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
                           TextButton(
                             child: const Text('OK'),
                             onPressed: () {
-                              Navigator.of(context).pop('Inicio :' +
-                                  startTimeFriday.toString().substring(10,15) +
-                                  ' Fin :' +
-                                  endTimeFriday.toString().substring(10,15) );
+                              Navigator.of(context).pop('Inicio: ' +
+                                  startTimeFriday.toString().substring(10, 15) +
+                                  '   Fin: ' +
+                                  endTimeFriday.toString().substring(10, 15));
                             },
                           ),
                         ],
@@ -461,14 +467,25 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
                   ),
                 ),
                 onPressed: () async {
+               
                   _authHelper.insertDisponibilidades(Disponibilidad(
                       correo: correo,
-                      domingo: "",
-                      lunes: monday,
-                      martes: tuesday,
-                      miercoles: wednesday,
-                      jueves: thursday,
-                      viernes: friday,
+                      domingo: "",                      
+                      lunes: monday.substring(8, 13) +
+                          "-" +
+                          monday.substring(21, 26),
+                      martes: tuesday.substring(8, 13) +
+                          "-" +
+                          tuesday.substring(21, 26),
+                      miercoles: wednesday.substring(8, 13) +
+                          "-" +
+                          wednesday.substring(21, 26),
+                      jueves: thursday.substring(8, 13) +
+                          "-" +
+                          thursday.substring(21, 26),
+                      viernes: friday.substring(8, 13) +
+                          "-" +
+                          friday.substring(21, 26),
                       sabado: ""));
                   _dialogBuilder(context);
                 },
@@ -481,7 +498,6 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
   }
 
   void _gotoHomeScreen() {
-    
     _authHelper.getDisponibilidadByCorreos(correo).then((disponibilidadData) {
       setState(() {
         startTimeMonday = TimeOfDay(
@@ -491,9 +507,9 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
             hour: int.parse(disponibilidadData.lunes.substring(6, 8)),
             minute: int.parse(disponibilidadData.lunes.substring(9, 11)));
         monday = 'Inicio: ' +
-            startTimeMonday.toString().substring(10,15) +
+            startTimeMonday.toString().substring(10, 15) +
             '   Fin: ' +
-            endTimeMonday.toString().substring(10,15);
+            endTimeMonday.toString().substring(10, 15);
 
         startTimeTuesday = TimeOfDay(
             hour: int.parse(disponibilidadData.martes.substring(0, 2)),
@@ -502,9 +518,9 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
             hour: int.parse(disponibilidadData.martes.substring(6, 8)),
             minute: int.parse(disponibilidadData.martes.substring(9, 11)));
         tuesday = 'Inicio: ' +
-            startTimeTuesday.toString().substring(10,15) +
+            startTimeTuesday.toString().substring(10, 15) +
             '   Fin: ' +
-            endTimeTuesday.toString().substring(10,15) ;
+            endTimeTuesday.toString().substring(10, 15);
 
         startTimeWednesday = TimeOfDay(
             hour: int.parse(disponibilidadData.miercoles.substring(0, 2)),
@@ -513,9 +529,9 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
             hour: int.parse(disponibilidadData.miercoles.substring(6, 8)),
             minute: int.parse(disponibilidadData.miercoles.substring(9, 11)));
         wednesday = 'Inicio: ' +
-            startTimeWednesday.toString().substring(10,15) +
+            startTimeWednesday.toString().substring(10, 15) +
             '   Fin: ' +
-            endTimeWednesday.toString().substring(10,15);
+            endTimeWednesday.toString().substring(10, 15);
 
         startTimeThursday = TimeOfDay(
             hour: int.parse(disponibilidadData.jueves.substring(0, 2)),
@@ -524,9 +540,9 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
             hour: int.parse(disponibilidadData.jueves.substring(6, 8)),
             minute: int.parse(disponibilidadData.jueves.substring(9, 11)));
         thursday = 'Inicio: ' +
-            startTimeThursday.toString().substring(10,15) +
+            startTimeThursday.toString().substring(10, 15) +
             '   Fin: ' +
-            endTimeThursday.toString().substring(10,15);
+            endTimeThursday.toString().substring(10, 15);
 
         startTimeFriday = TimeOfDay(
             hour: int.parse(disponibilidadData.viernes.substring(0, 2)),
@@ -535,9 +551,9 @@ correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
             hour: int.parse(disponibilidadData.viernes.substring(6, 8)),
             minute: int.parse(disponibilidadData.viernes.substring(9, 11)));
         friday = 'Inicio: ' +
-            startTimeFriday.toString().substring(10,15) +
+            startTimeFriday.toString().substring(10, 15) +
             '   Fin: ' +
-            endTimeFriday.toString().substring(10,15);
+            endTimeFriday.toString().substring(10, 15);
       });
     });
   }

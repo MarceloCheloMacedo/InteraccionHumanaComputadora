@@ -26,19 +26,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  ); // Initialize Firebase with the DefaultFirebaseOptions
- /* Disponibilidad dispo = Disponibilidad(
-    correo: 'marcelo5411a@hotmail.com',
-    domingo: '18:00',
-    lunes: '18:00',
-    martes: '18:00',
-    miercoles: '19:00',
-    jueves: '18:00',
-    viernes: '18:00',
-    sabado: '18:00',
-  );
-
-  insertDisponibilidad(dispo);*/
+  ); // Initialize Firebase with the DefaultFirebaseOptions  
 
   runApp(
     ChangeNotifierProvider(
