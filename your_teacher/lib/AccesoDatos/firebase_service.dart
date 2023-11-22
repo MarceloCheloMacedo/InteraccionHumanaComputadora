@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:your_teacher/Dominios/Lesson.dart';
 import 'package:your_teacher/Dominios/user.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
 
@@ -126,8 +127,6 @@ Future<List<UserD>> getAllTeachers() async {
   return teachers;
 }
 
-
-
 Future<List<UserD>> getUsersWithAvailability(String dia) async {
   List<UserD> usersWithAvailability = [];
   List<Disponibilidad> disponibilidades = await getDisponibilidades();
@@ -160,7 +159,6 @@ Future<List<UserD>> getUsersWithAvailability(String dia) async {
         attributeValue = null;
         break;
     }
-
 
     if (attributeValue != null && attributeValue != '') {
       UserD? user = await getUserByEmail(disponibilidad.correo);
@@ -210,7 +208,6 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
 Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
   CollectionReference collectionReferenceDisponibilidades =
       db.collection('disponibilidad');
-
 
   QuerySnapshot queryDisponibilidad = await collectionReferenceDisponibilidades
       .where('correo', isEqualTo: correo)
@@ -313,5 +310,44 @@ Future<bool> existeDisponibilidad(String correo) async {
   return queryDisponibilidades.docs.isNotEmpty;
 }
 
-//----------------------------------Empieza     ----------------------------------------------------
-//--------------------------------------------------------------------------------------------------
+//----------------------------------Empieza   clases  --------------------------
+//------------------------------------------------------------------------------
+
+Future<List<Lesson>> getAllLessonsByEmailAC(String correo) async {
+  CollectionReference collectionReferenceClases = db.collection('clases');
+
+  QuerySnapshot queryClases =
+      await collectionReferenceClases.where('correo', isEqualTo: correo).get();
+
+  List<Lesson> clasesLista = []; // Declarar la lista aquí
+
+  if (queryClases.docs.isNotEmpty) {
+    for (QueryDocumentSnapshot document in queryClases.docs) {
+      Map<String, dynamic>? clasesData =
+          document.data() as Map<String, dynamic>?;
+
+      if (clasesData != null) {
+        Lesson lesson = Lesson(
+          correo: clasesData['correo'] ?? '',
+          dia: clasesData['dia'] ?? '',
+          hora: clasesData['hora'] ?? '',
+          link: clasesData['link'] ?? '',
+        );
+
+        clasesLista.add(lesson); // Agregar la lección a la lista
+      }
+    }
+  }
+
+  return clasesLista; // Devolver la lista de lecciones
+}
+
+Future<void> insertLesson(Lesson lesson) async {
+  CollectionReference collectionReferenceClases = db.collection('clases');
+  await collectionReferenceClases.add({
+    'correo': lesson.correo,
+    'dia': lesson.dia,
+    'hora': lesson.hora,
+    'link': lesson.link,
+  });
+}

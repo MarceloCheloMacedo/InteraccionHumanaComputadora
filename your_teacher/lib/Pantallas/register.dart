@@ -92,7 +92,7 @@ class _RegisterState extends State<Register> {
               children: <Widget>[
                 Container(
                   height: 50,
-                  child: TextField(
+                  child: TextFormField(
                     controller: nameController,
                     enableInteractiveSelection: false,
                     autofocus: true,
@@ -104,16 +104,18 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onSubmitted: (valor) {
-                      // _email = valor;
-                      //print('El email es $_email');
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo requerido';
+                      }
+                      return null;
                     },
                   ),
                 ),
                 SizedBox(height: 12),
                 Container(
                   height: 50,
-                  child: TextField(
+                  child: TextFormField(
                     controller: lastNameController,
                     enableInteractiveSelection: false,
                     autofocus: true,
@@ -125,9 +127,11 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onSubmitted: (valor) {
-                      // _email = valor;
-                      //print('El email es $_email');
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo requerido';
+                      }
+                      return null;
                     },
                   ),
                 ),
@@ -284,7 +288,7 @@ class _RegisterState extends State<Register> {
                 //Email
                 Container(
                   height: 50,
-                  child: TextField(
+                  child: TextFormField(
                     controller: emailController,
                     enableInteractiveSelection: false,
                     autofocus: true,
@@ -296,13 +300,18 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onSubmitted: (valor) {},
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo requerido';
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 SizedBox(height: 12),
                 Container(
                   height: 50,
-                  child: TextField(
+                  child: TextFormField(
                     controller:
                         passwordController, // Asigna el controlador de contraseña
                     enableInteractiveSelection: false,
@@ -316,7 +325,12 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onSubmitted: (valor) {},
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo requerido';
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 SizedBox(height: 18),
@@ -330,41 +344,43 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   onPressed: () async {
-                    String nombre = nameController.text;
-                    String apellido = lastNameController.text;
+                    if (_formKey.currentState?.validate() ?? false) {
+                      String nombre = nameController.text;
+                      String apellido = lastNameController.text;
 
-                    String tipoCuenta = selectedGender ??
-                        'Alumno'; // Si es nulo, establecer a 'Alumno'
-                    String paisNacimiento = countryValue;
-                    String email = emailController.text;
-                    String password = passwordController.text;
+                      String tipoCuenta = selectedGender ??
+                          'Alumno'; // Si es nulo, establecer a 'Alumno'
+                      String paisNacimiento = countryValue;
+                      String email = emailController.text;
+                      String password = passwordController.text;
 
-                    UserD newUser = UserD(
-                      correo: email,
-                      nombre: nombre,
-                      apellido: apellido,
-                      foto: "",
-                      tipo: tipoCuenta,
-                      pais: paisNacimiento,
-                      fechaNacimiento: DateTime.parse(_dateOfBirth),
-                    );
-
-                    User? userFirebase =
-                        await helperAuth.signUpWithEmailAndPassword(
-                            emailController.text,
-                            passwordController.text,
-                            context,
-                            newUser);
-
-                    if (userFirebase != null) {
-                      // El usuario se registró con éxito, redirige a otra página.
-                      await Future.delayed(Duration(seconds: 2));
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyLoggin(),
-                        ),
+                      UserD newUser = UserD(
+                        correo: email,
+                        nombre: nombre,
+                        apellido: apellido,
+                        foto: "",
+                        tipo: tipoCuenta,
+                        pais: paisNacimiento,
+                        fechaNacimiento: DateTime.parse(_dateOfBirth),
                       );
+
+                      User? userFirebase =
+                          await helperAuth.signUpWithEmailAndPassword(
+                              emailController.text,
+                              passwordController.text,
+                              context,
+                              newUser);
+
+                      if (userFirebase != null) {
+                        // El usuario se registró con éxito, redirige a otra página.
+                        await Future.delayed(Duration(seconds: 2));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyLoggin(),
+                          ),
+                        );
+                      }
                     }
                     ;
                   },
