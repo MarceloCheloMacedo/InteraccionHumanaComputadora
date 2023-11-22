@@ -8,15 +8,14 @@ import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/homePage.dart';
 import 'package:your_teacher/Pantallas/widget/NavDrawerStudentTeacher.dart';
 
-class Available_Teacher extends StatelessWidget {
+class Available_Teacher extends StatefulWidget {
+  final String mail;
+  const Available_Teacher({Key? key, required this.mail}) : super(key: key);
   @override
-  const Available_Teacher({super.key, required this.correo});
-  final String correo;
-//  @override
-//  State<Available_Teacher> createState() => _Available_TeacherState();
-//}
+  State<Available_Teacher> createState() => _Available_TeacherState();
+}
 
-//class _Available_TeacherState extends State<Available_Teacher> {
+class _Available_TeacherState extends State<Available_Teacher> {
   final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
   final format = DateFormat.jm();
   TimeOfDay startTimeMonday = TimeOfDay(hour: 9, minute: 0);
@@ -36,17 +35,17 @@ class Available_Teacher extends StatelessWidget {
   String friday = "";
 
   Disponibilidad? disponibilidadUsuario;
-
+  String correo = "";
   @override
   // ignore: must_call_super
   initState() {
-    _gotoHomeScreen(correo);
+    _gotoHomeScreen();
     // ignore: avoid_print
   }
 
   @override
   Widget build(BuildContext context) {
-    String correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
+    correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
     return Scaffold(
       drawer: NavDrawerStudentTeacher(),
       appBar: AppBar(
@@ -66,7 +65,7 @@ class Available_Teacher extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             margin: const EdgeInsets.all(40.0),
-            height: 750,
+            height: 700,
             child: Column(
               children: [
                 Text(
@@ -513,8 +512,10 @@ class Available_Teacher extends StatelessWidget {
     );
   }
 
-  void _gotoHomeScreen(String correo) {
-    _authHelper.getDisponibilidadByCorreos(correo).then((disponibilidadData) {
+  void _gotoHomeScreen() {
+    _authHelper
+        .getDisponibilidadByCorreos(widget.mail)
+        .then((disponibilidadData) {
       setState(() {
         startTimeMonday = TimeOfDay(
             hour: int.parse(disponibilidadData.lunes.substring(0, 2)),

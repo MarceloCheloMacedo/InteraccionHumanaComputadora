@@ -6,6 +6,7 @@ import 'package:your_teacher/Pantallas/501NotImplemented.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
+import 'package:your_teacher/Pantallas/help.dart';
 import 'package:your_teacher/Pantallas/login.dart';
 
 class NavDrawerStudentTeacher extends StatelessWidget {
@@ -15,6 +16,7 @@ class NavDrawerStudentTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? userType = Provider.of<AppState>(context).usuarioLogeado?.tipo;
+    String correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
     if (userType == 'Profesor')
       isTeacher = true;
     else
@@ -51,7 +53,7 @@ class NavDrawerStudentTeacher extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const Available_Teacher()))
+                      builder: (context) => Available_Teacher(mail:correo)))
             },
           ),
           isTeacher
@@ -72,7 +74,7 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Available_Teacher(),
+                        builder: (context) => Available_Teacher(mail:correo),
                       ),
                     ),
                   },
@@ -130,8 +132,10 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () => {Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => NotImplemented()))},
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NotImplemented()))
+            },
           ),
           ListTile(
             leading: Icon(
@@ -163,7 +167,14 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Help(),
+                ),
+              ),
+            },
           ),
           ListTile(
             leading: Icon(

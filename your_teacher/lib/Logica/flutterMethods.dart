@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:your_teacher/AccesoDatos/firebase_service.dart';
+import 'package:your_teacher/Dominios/Lesson.dart';
 import '../Errores/authentication_errors.dart';
 import '../AccesoDatos/firebase_service.dart' as a;
 import '../Dominios/Disponibilidad.dart';
 import '../Dominios/user.dart';
-
 
 class FirebaseAuthHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -100,5 +100,9 @@ class FirebaseAuthHelper {
   Future<Disponibilidad> getDisponibilidadByCorreos(String correo) async {
     final Disponibilidad = await getDisponibilidadByCorreo(correo);
     return Disponibilidad;
+  }
+
+  Future<List<Lesson>> getAllLessonsByEmail(String correo) async {
+    return await getAllLessonsByEmailAC(correo);
   }
 }
