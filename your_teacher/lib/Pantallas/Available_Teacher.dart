@@ -48,6 +48,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
+        child: SingleChildScrollView( 
         child: Container(
           decoration: BoxDecoration(
             color: const Color.fromRGBO(246, 243, 233, 1),
@@ -58,8 +59,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           margin: const EdgeInsets.all(40.0),
-          height: 750,
-          child: SingleChildScrollView(          
+          height: 750,                   
             child:Column(
               children: [
                 Text(
