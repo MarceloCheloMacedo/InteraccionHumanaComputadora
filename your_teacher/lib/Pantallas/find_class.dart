@@ -32,18 +32,11 @@ class _MyFind_ClassState extends State<MyFind_Class> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       drawer: NavDrawerStudentTeacher(),
       appBar: AppBar(
         title: Text(''),
       ),
 
-=======
-            drawer: NavDrawerStudentTeacher(),
-      appBar: AppBar(
-        title: Text(''),
-      ),
->>>>>>> 15225da555cee81b808436c5d0dcb457a9269ad6
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
         child: Container(
