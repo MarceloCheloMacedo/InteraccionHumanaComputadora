@@ -5,6 +5,7 @@ import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
+import 'package:your_teacher/Pantallas/help.dart';
 import 'package:your_teacher/Pantallas/login.dart';
 
 class NavDrawerStudentTeacher extends StatelessWidget {
@@ -161,7 +162,12 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Help(),
+                      ),
+                    ),},
           ),
           ListTile(
             leading: Icon(
