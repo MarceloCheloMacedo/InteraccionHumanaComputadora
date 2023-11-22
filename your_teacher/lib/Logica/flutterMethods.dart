@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:your_teacher/AccesoDatos/firebase_service.dart';
 import '../Errores/authentication_errors.dart';
 import '../AccesoDatos/firebase_service.dart' as a;
 import '../Dominios/Disponibilidad.dart';
+import '../Dominios/user.dart';
 
 
 class FirebaseAuthHelper {
@@ -33,14 +35,23 @@ class FirebaseAuthHelper {
     }
   }
 
-  Future<User?> signUpWithEmailAndPassword(
-      String email, String password, BuildContext context) async {
+  Future<User?> signUpWithEmailAndPassword(String email, String password,
+      BuildContext context, UserD userNew) async {
     try {
       final UserCredential authResult =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      insertUser(userNew);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Registro exitoso'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+
       return authResult.user;
     } catch (e) {
       ErrorMessages.showAuthenticationErrorDialog(context, e);
@@ -66,11 +77,11 @@ class FirebaseAuthHelper {
     await _auth.signOut();
   }
 
-  Future<List<User>> getUsersWithAvailability(String dia) async {
+  Future<List<UserD>> getUsersWithAvailability(String dia) async {
     return await getUsersWithAvailability(dia);
   }
 
-  Future<List<User>> insertDisponibilidad(Disponibilidad disponibilidad) async {
+  Future<void> insertDisponibilidades(Disponibilidad disponibilidad) async {
     return await insertDisponibilidad(disponibilidad);
   }
 
@@ -82,7 +93,12 @@ class FirebaseAuthHelper {
     return await getDisponibilidades();
   }
 
-  Future<List<User>> getAllTeachers() async {
+  Future<List<UserD>> getAllTeachers() async {
     return await getAllTeachers();
+  }
+
+  Future<Disponibilidad> getDisponibilidadByCorreos(String correo) async {
+    final Disponibilidad = await getDisponibilidadByCorreo(correo);
+    return Disponibilidad;
   }
 }

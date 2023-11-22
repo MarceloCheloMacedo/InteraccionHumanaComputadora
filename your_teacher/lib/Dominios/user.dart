@@ -1,6 +1,6 @@
 //enum UserType { profesor, alumno }
 
-class User {
+class UserD {
   final String? uid;
   final String correo;
   final String nombre;
@@ -8,8 +8,9 @@ class User {
   final String foto;
   final String tipo;
   final String pais;
+  final DateTime fechaNacimiento;
 
-  User({
+  UserD({
     this.uid,
     required this.correo,
     required this.nombre,
@@ -17,6 +18,7 @@ class User {
     required this.foto,
     required this.tipo,
     required this.pais,
+    required this.fechaNacimiento,
   });
 
   /*factory User.fromFirebaseUser(UserCredential userCredential) {

@@ -8,7 +8,7 @@ class CalendarScreen extends StatelessWidget {
   @override
   //_CalendarScreenState createState() => _CalendarScreenState();
   const CalendarScreen({super.key, required this.userSelected, required this.disponibilidad,required this.daySelected});
-  final User userSelected;
+  final UserD userSelected;
   final String? daySelected;
   final Disponibilidad? disponibilidad;
   

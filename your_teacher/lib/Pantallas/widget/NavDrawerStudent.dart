@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Pantallas/login.dart';
 
@@ -29,7 +30,10 @@ class NavDrawerStudent extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Available_Teacher()))},
           ),
           isTeacher?
           ListTile(

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
+import 'package:your_teacher/Pantallas/homePage.dart';
 import 'package:your_teacher/Pantallas/register.dart';
 import 'package:flutter/material.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
@@ -88,9 +89,8 @@ class _MyLogginState extends State<MyLoggin> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
-                onSubmitted: (valor) {
-                  // _email = valor;
-                  //print('El email es $_email');
+                onChanged: (_) {
+                  setState(() {});
                 },
               ),
               const Divider(
@@ -110,9 +110,8 @@ class _MyLogginState extends State<MyLoggin> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
-                onSubmitted: (valor) {
-                  //_password = valor;
-                  //print('El password es $_password');
+                onChanged: (_) {
+                  setState(() {});
                 },
               ),
               const Divider(
@@ -136,26 +135,39 @@ class _MyLogginState extends State<MyLoggin> {
                     fontFamily: 'NerkoOne',
                   ),
                 ),
-                onPressed: () async {
-                  String email = emailController.text;
-                  String password = passwordController.text;
+                onPressed: (emailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty)
+                    ? () async {
+                        String email = emailController.text;
+                        String password = passwordController.text;
 
-                  User? user = await _authHelper.signInWithEmailAndPassword(
-                      email, password, context);
-                  //  var user;
-                  //
+                        User? user =
+                            await _authHelper.signInWithEmailAndPassword(
+                                email, password, context);
+                        //  var user;
+                        //
 
-                  if (user != null) {
-                    Provider.of<AppState>(context, listen: false)
-                        .setUsuarioLogeado(emailController.text ?? '');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Inicio de sesión con Google exitoso'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  }
-                },
+                        if (user != null) {
+                          Provider.of<AppState>(context, listen: false)
+                              .setUsuarioLogeado(emailController.text ?? '');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Inicio de sesión exitoso'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        }
+
+                        await Future.delayed(Duration(seconds: 1));
+                        if (user != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
+                          );
+                        }
+                      }
+                    : null,
               ),
 
               // String? email =

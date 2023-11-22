@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:your_teacher/Dominios/Disponibilidad.dart';
 import '../AccesoDatos/Manage_Context.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +23,23 @@ import 'package:your_teacher/Pantallas/widget/MyTimeRange.dart';
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Asegura la inicialización de WidgetsFlutterBinding
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); // Initialize Firebase with the DefaultFirebaseOptions
+  Disponibilidad dispo = Disponibilidad(
+    correo: 'marcelo5411a@hotmail.com',
+    domingo: '18:00',
+    lunes: '18:00',
+    martes: '18:00',
+    miercoles: '19:00',
+    jueves: '18:00',
+    viernes: '18:00',
+    sabado: '18:00',
+  );
+
+  insertDisponibilidad(dispo);
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppState(),

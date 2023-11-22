@@ -127,7 +127,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                   ),
                 ),
                 onPressed: () async {
-                    List<User> teachers  = await _getHelper.getUsersWithAvailability(daySelected);//= new List.empty();
+                    List<UserD> teachers  = await _getHelper.getUsersWithAvailability(daySelected);//= new List.empty();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
