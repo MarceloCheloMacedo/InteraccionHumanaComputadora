@@ -126,33 +126,34 @@ Future<List<UserD>> getAllTeachers() async {
   return teachers;
 }
 
+
+
 Future<List<UserD>> getUsersWithAvailability(String dia) async {
   List<UserD> usersWithAvailability = [];
-
   List<Disponibilidad> disponibilidades = await getDisponibilidades();
 
   for (Disponibilidad disponibilidad in disponibilidades) {
     String? attributeValue;
     switch (dia) {
-      case 'domingo':
+      case 'Domingo':
         attributeValue = disponibilidad.domingo;
         break;
-      case 'lunes':
+      case 'Lunes':
         attributeValue = disponibilidad.lunes;
         break;
-      case 'martes':
+      case 'Martes':
         attributeValue = disponibilidad.martes;
         break;
-      case 'miercoles':
+      case 'Miercoles':
         attributeValue = disponibilidad.miercoles;
         break;
-      case 'jueves':
+      case 'Jueves':
         attributeValue = disponibilidad.jueves;
         break;
       case 'viernes':
         attributeValue = disponibilidad.viernes;
         break;
-      case 'sabado':
+      case 'Sabado':
         attributeValue = disponibilidad.sabado;
         break;
       default:
@@ -160,8 +161,10 @@ Future<List<UserD>> getUsersWithAvailability(String dia) async {
         break;
     }
 
-    if (attributeValue != null) {
+
+    if (attributeValue != null && attributeValue != '') {
       UserD? user = await getUserByEmail(disponibilidad.correo);
+
       if (user != null) {
         usersWithAvailability.add(user);
       }
@@ -207,6 +210,8 @@ Future<List<Disponibilidad>> getDisponibilidades() async {
 Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
   CollectionReference collectionReferenceDisponibilidades =
       db.collection('disponibilidad');
+
+
   QuerySnapshot queryDisponibilidad = await collectionReferenceDisponibilidades
       .where('correo', isEqualTo: correo)
       .get();

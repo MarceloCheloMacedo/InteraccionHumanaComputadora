@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:your_teacher/AccesoDatos/firebase_service.dart';
 import '../Errores/authentication_errors.dart';
-import '../AccesoDatos/firebase_service.dart';
+import '../AccesoDatos/firebase_service.dart' as a;
 import '../Dominios/Disponibilidad.dart';
 import '../Dominios/user.dart';
+
 
 class FirebaseAuthHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -75,8 +77,8 @@ class FirebaseAuthHelper {
     await _auth.signOut();
   }
 
-  Future<List<UserD>> getUsersWithAvailability(String dia) async {
-    return await getUsersWithAvailability(dia);
+  Future<List<UserD>> getUsersWithAvailability(String? dia) async {
+    return await a.getUsersWithAvailability(dia!);
   }
 
   Future<void> insertDisponibilidades(Disponibilidad disponibilidad) async {

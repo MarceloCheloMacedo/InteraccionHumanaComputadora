@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
 import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
+import 'package:your_teacher/Pantallas/login.dart';
 
-class NavDrawerStudent extends StatelessWidget {
+class NavDrawerStudentTeacher extends StatelessWidget {
+  bool isTeacher = false;
+
   @override
   Widget build(BuildContext context) {
+      String? userType = Provider.of<AppState>(context).usuarioLogeado?.tipo;
+      if(userType == 'Profesor')
+        isTeacher = true;
+      else
+        isTeacher = false;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -33,31 +43,44 @@ class NavDrawerStudent extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => const Available_Teacher()))},
           ),
+          isTeacher?
           ListTile(
-            leading: Icon(Icons.perm_contact_calendar,size: 35,color:Colors.black,),
-            title: Text('BUSCAR CLASE',
+            leading: Icon(Icons.calendar_today_rounded,size: 35,color:Colors.black,),
+            title: Text('MI DISPONIBILIDAD',
               style: TextStyle(                
                 fontSize: 25.0,
                 fontFamily: 'NerkoOne',
-              ),),
-            onTap: () => {
-                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MyFind_Class()))
-              },
-          ),
-          ListTile(
-            leading: Icon(Icons.paid,size: 35,color:Colors.black,),
-            title: Text('MI BALANCE',
-              style: TextStyle(                
-                fontSize: 25.0,
-                fontFamily: 'NerkoOne',
-              ),),
-            onTap: () => {              
-                Navigator.of(context).pop() 
-              },
-          ),
+              ),
+            ),
+            onTap: () => {Navigator.of(context).pop()},
+          ): Container(),
+          !isTeacher ?
+            ListTile(
+              leading: Icon(Icons.perm_contact_calendar,size: 35,color:Colors.black,),
+              title: Text('BUSCAR CLASE',
+                style: TextStyle(                
+                  fontSize: 25.0,
+                  fontFamily: 'NerkoOne',
+                ),),
+              onTap: () => {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyFind_Class()))
+                },
+            ):Container(),
+          isTeacher ?
+            ListTile(
+              leading: Icon(Icons.paid,size: 35,color:Colors.black,),
+              title: Text('MI BALANCE',
+                style: TextStyle(                
+                  fontSize: 25.0,
+                  fontFamily: 'NerkoOne',
+                ),),
+              onTap: () => {              
+                  Navigator.of(context).pop() 
+                },
+            ): Container(),
           ListTile(
             leading: Icon(Icons.inventory_2,size: 35,color:Colors.black,),
             title: Text('HISTORIAL DE CLASES',
@@ -95,7 +118,12 @@ class NavDrawerStudent extends StatelessWidget {
                 fontSize: 25.0,
                 fontFamily: 'NerkoOne',
               ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyLoggin()))
+                },
           ),
         ],
       ),
