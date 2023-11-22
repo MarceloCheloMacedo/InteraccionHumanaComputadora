@@ -23,7 +23,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  ); // Initialize Firebase with the DefaultFirebaseOptions  
+  ); // Initialize Firebase with the DefaultFirebaseOptions
 
   runApp(
     ChangeNotifierProvider(

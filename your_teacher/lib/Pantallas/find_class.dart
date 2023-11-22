@@ -3,33 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
-import 'package:your_teacher/Logica/flutterExtraMethods.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:your_teacher/AccesoDatos/firebase_service.dart';
 import '../Dominios/user.dart';
-
-
-
 
 class MyFind_Class extends StatefulWidget {
   const MyFind_Class({Key? key});
 
   @override
   State<MyFind_Class> createState() => _MyFind_ClassState();
-  
 }
 
 class _MyFind_ClassState extends State<MyFind_Class> {
   final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
   //final FirebaseGetHelper _getHelper = FirebaseGetHelper();
   String? daySelected = "";
-  List<String> listDays = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
-
+  List<String> listDays = [
+    'Lunes',
+    'Martes',
+    'Miercoles',
+    'Jueves',
+    'Viernes',
+    'Sabado',
+    'Domingo'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
         child: Container(
@@ -58,7 +59,6 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                 padding: EdgeInsets.symmetric(vertical: 5.0),
                 child: Text(''),
               ),
-
               DropdownButtonFormField(
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.black45),
@@ -68,7 +68,7 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                items: listDays.map((e){
+                items: listDays.map((e) {
                   return DropdownMenuItem(
                     child: SizedBox(
                       width: double.infinity,
@@ -81,20 +81,17 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                   );
                 }).toList(),
                 onChanged: (e) {
-                   setState(() {
+                  setState(() {
                     daySelected = e;
                   });
                 },
                 isDense: true,
                 isExpanded: true,
               ),
-              
-
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(''),
               ),
-
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(''),
@@ -128,12 +125,15 @@ class _MyFind_ClassState extends State<MyFind_Class> {
                   ),
                 ),
                 onPressed: () async {
-                    List<UserD> teachers  = await _authHelper.getUsersWithAvailability(daySelected);//= new List.empty();
+                  List<UserD> teachers =
+                      await _authHelper.getUsersWithAvailability(
+                          daySelected); //= new List.empty();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Available_Lessons(                            
-                                teachersFilter: teachers, daySelected: daySelected,
+                          builder: (context) => Available_Lessons(
+                                teachersFilter: teachers,
+                                daySelected: daySelected,
                               )));
                 },
               ),

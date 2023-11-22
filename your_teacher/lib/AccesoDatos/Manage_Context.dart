@@ -10,4 +10,9 @@ class AppState extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void logout() {
+    usuarioLogeado = null;
+    notifyListeners();
+  }
 }
