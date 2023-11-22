@@ -17,6 +17,9 @@ Future<List<UserD>> getPeople() async {
     Map<String, dynamic>? userData = documento.data() as Map<String, dynamic>?;
 
     if (userData != null) {
+      Timestamp timestamp = userData['fechaNacimiento'] as Timestamp;
+      DateTime fechaNacimiento = timestamp.toDate();
+
       UserD user = UserD(
         correo: userData['correo'] ?? '',
         nombre: userData['nombre'] ?? '',
@@ -24,7 +27,7 @@ Future<List<UserD>> getPeople() async {
         foto: userData['foto'] ?? '',
         tipo: userData['tipo'] ?? '',
         pais: userData['pais'] ?? '',
-        fechaNacimiento: userData['fechaNacimiento'] ?? '',
+        fechaNacimiento: DateTime.now(),
       );
       people.add(user);
     }
@@ -76,7 +79,8 @@ Future<UserD?> getUserByEmail(String correo) async {
   if (queryPeople.docs.isNotEmpty) {
     Map<String, dynamic>? userData =
         queryPeople.docs.first.data() as Map<String, dynamic>?;
-
+    Timestamp timestamp = userData?['fechaNacimiento'] as Timestamp;
+    DateTime fechaNacimiento = timestamp.toDate();
     if (userData != null) {
       UserD user = UserD(
         correo: userData['correo'] ?? '',
@@ -85,7 +89,7 @@ Future<UserD?> getUserByEmail(String correo) async {
         foto: userData['foto'] ?? '',
         tipo: userData['tipo'] ?? '',
         pais: userData['pais'] ?? '',
-        fechaNacimiento: new DateTime.fromMicrosecondsSinceEpoch(userData['fechaNacimiento']),
+        fechaNacimiento: fechaNacimiento,
       );
 
       return user;
@@ -211,7 +215,6 @@ Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
     Map<String, dynamic>? disponibilidadData =
         queryDisponibilidad.docs.first.data() as Map<String, dynamic>?;
     if (disponibilidadData != null) {
-      
       Disponibilidad disponibilidad = Disponibilidad(
         correo: disponibilidadData['correo'] ?? '',
         domingo: disponibilidadData['domingo'] ?? '',
@@ -226,32 +229,32 @@ Future<Disponibilidad> getDisponibilidadByCorreo(String correo) async {
       return disponibilidad;
     }
   }
-  
+
   Disponibilidad disponibilidad = Disponibilidad(
-    correo: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+    correo: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    domingo: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    domingo: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    lunes: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    lunes: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    martes: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    martes: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    miercoles: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    miercoles: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    jueves: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    jueves: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    viernes: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    viernes: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
-    sabado: TimeOfDay(hour: 9, minute: 0).toString().substring(10,15)  +
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
+    sabado: TimeOfDay(hour: 9, minute: 0).toString().substring(10, 15) +
         '-' +
-        TimeOfDay(hour: 18, minute: 0).toString().substring(10,15) ,
+        TimeOfDay(hour: 18, minute: 0).toString().substring(10, 15),
   );
   return disponibilidad;
 }
