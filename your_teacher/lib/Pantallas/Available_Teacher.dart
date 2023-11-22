@@ -6,6 +6,7 @@ import 'package:your_teacher/Dominios/Disponibilidad.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/homePage.dart';
+import 'package:your_teacher/Pantallas/widget/NavDrawerStudentTeacher.dart';
 
 class Available_Teacher extends StatefulWidget {
   const Available_Teacher({Key? key});
@@ -46,6 +47,10 @@ class _Available_TeacherState extends State<Available_Teacher> {
   Widget build(BuildContext context) {
     correo = Provider.of<AppState>(context).usuarioLogeado!.correo;
     return Scaffold(
+      drawer: NavDrawerStudentTeacher(),
+      appBar: AppBar(
+        title: Text(''),
+      ),
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
         child: Container(

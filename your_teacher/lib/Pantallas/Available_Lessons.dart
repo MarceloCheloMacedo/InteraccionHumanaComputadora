@@ -3,10 +3,12 @@ import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Dominios/user.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
 import 'package:your_teacher/AccesoDatos/firebase_service.dart' as service;
+import 'package:your_teacher/Pantallas/widget/NavDrawerStudentTeacher.dart';
 import 'package:your_teacher/Pantallas/widget/calendarScreen.dart';
 
 class Available_Lessons extends StatelessWidget {
-  const Available_Lessons({super.key, required this.teachersFilter, required this.daySelected});
+  const Available_Lessons(
+      {super.key, required this.teachersFilter, required this.daySelected});
   final List<UserD> teachersFilter;
   final String? daySelected;
 
@@ -14,6 +16,7 @@ class Available_Lessons extends StatelessWidget {
   Widget build(BuildContext context) {
     Disponibilidad? dispo;
     return Scaffold(
+      drawer: NavDrawerStudentTeacher(),
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(246, 243, 233, 1),
@@ -52,11 +55,16 @@ class Available_Lessons extends StatelessWidget {
                   color: Colors.green[700],
                 ),
                 onTap: () async => {
-                  dispo = await service.getDisponibilidadByCorreo(teachersFilter[index].correo),
+                  dispo = await service
+                      .getDisponibilidadByCorreo(teachersFilter[index].correo),
                   Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  CalendarScreen(userSelected: teachersFilter[index],disponibilidad: dispo, daySelected: daySelected,)))
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CalendarScreen(
+                                userSelected: teachersFilter[index],
+                                disponibilidad: dispo,
+                                daySelected: daySelected,
+                              )))
                 },
               ));
         },

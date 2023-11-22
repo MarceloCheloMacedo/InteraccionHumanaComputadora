@@ -5,6 +5,7 @@ import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:your_teacher/AccesoDatos/firebase_service.dart';
+import 'package:your_teacher/Pantallas/widget/NavDrawerStudentTeacher.dart';
 import '../Dominios/user.dart';
 
 class MyFind_Class extends StatefulWidget {
@@ -31,6 +32,11 @@ class _MyFind_ClassState extends State<MyFind_Class> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawerStudentTeacher(),
+      appBar: AppBar(
+        title: Text(''),
+      ),
+
       backgroundColor: const Color.fromRGBO(247, 225, 180, 1),
       body: Center(
         child: Container(
