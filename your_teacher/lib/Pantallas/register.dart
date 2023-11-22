@@ -6,6 +6,7 @@ import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:your_teacher/Pantallas/login.dart';
+import 'package:intl/intl.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key});
@@ -16,6 +17,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   String? selectedGender = 'Alumno';
+
   Widget _buildRadioButtonGroup() {
     return Column(
       //crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,27 +132,42 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 SizedBox(height: 12),
-                DateTimeFormField(
-                  mode: DateTimeFieldPickerMode.date,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.black45),
-                    errorStyle: TextStyle(color: Colors.redAccent),
-                    suffixIcon: Icon(Icons.event_note),
-                    labelText: 'Fecha de nacimiento',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+
+                InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1920, 1, 1),
+                      lastDate: DateTime.now().add(const Duration(days: 1)),
+                    );
+
+                    if (pickedDate != null) {
+                      setState(() {
+                        _dateOfBirth =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                      });
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Fecha de nacimiento',
+                        //suffixIcon: Icon(Icons.event_note),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(_dateOfBirth),
+                          Icon(Icons.calendar_today),
+                        ],
+                      ),
                     ),
                   ),
-                  firstDate: DateTime.now().add(const Duration(days: 10)),
-                  lastDate: DateTime.now().add(const Duration(days: 40)),
-                  initialDate: DateTime.now().add(const Duration(days: 20)),
-                  autovalidateMode: AutovalidateMode.always,
-                  validator: (DateTime? e) =>
-                      (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
-                  onDateSelected: (DateTime value) {
-                    print(value);
-                    _dateOfBirth = value.toString();
-                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.0),
@@ -279,10 +296,7 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onSubmitted: (valor) {
-                      // _email = valor;
-                      //print('El email es $_email');
-                    },
+                    onSubmitted: (valor) {},
                   ),
                 ),
                 SizedBox(height: 12),
@@ -302,10 +316,7 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onSubmitted: (valor) {
-                      //_password = valor;
-                      //print('El password es $_password');
-                    },
+                    onSubmitted: (valor) {},
                   ),
                 ),
                 SizedBox(height: 18),
