@@ -8,6 +8,7 @@ import 'package:your_teacher/Pantallas/Available_Teacher.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Pantallas/help.dart';
 import 'package:your_teacher/Pantallas/login.dart';
+import 'package:your_teacher/Pantallas/perfil.dart';
 
 class NavDrawerStudentTeacher extends StatelessWidget {
   bool isTeacher = false;
@@ -21,6 +22,7 @@ class NavDrawerStudentTeacher extends StatelessWidget {
       isTeacher = true;
     else
       isTeacher = false;
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -50,10 +52,8 @@ class NavDrawerStudentTeacher extends StatelessWidget {
               ),
             ),
             onTap: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Available_Teacher(mail:correo)))
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserProfile()))
             },
           ),
           isTeacher
@@ -74,7 +74,7 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Available_Teacher(mail:correo),
+                        builder: (context) => Available_Teacher(mail: correo),
                       ),
                     ),
                   },

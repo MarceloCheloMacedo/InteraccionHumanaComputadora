@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
 import 'package:your_teacher/Pantallas/homePage.dart';
+import 'package:your_teacher/Pantallas/perfil.dart';
 import 'package:your_teacher/Pantallas/register.dart';
 import 'package:flutter/material.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
@@ -163,7 +164,7 @@ class _MyLogginState extends State<MyLoggin> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyHomePage()),
+                                builder: (context) => UserProfile()),
                           );
                         }
                       }
