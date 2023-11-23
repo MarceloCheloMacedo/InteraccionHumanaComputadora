@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
+import 'package:your_teacher/Dominios/Lesson.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/501NotImplemented.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Pantallas/Available_Teacher.dart';
+import 'package:your_teacher/Pantallas/NextLessons.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Pantallas/help.dart';
 import 'package:your_teacher/Pantallas/login.dart';
@@ -116,44 +118,55 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                       fontFamily: 'NerkoOne',
                     ),
                   ),
-                  onTap: () => {Navigator.of(context).pop()},
+                  onTap: () => {Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NotImplemented()))},
                 )
               : Container(),
-          ListTile(
-            leading: Icon(
-              Icons.inventory_2,
-              size: 35,
-              color: Colors.black,
-            ),
-            title: Text(
-              'HISTORIAL DE CLASES',
-              style: TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'NerkoOne',
-              ),
-            ),
-            onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NotImplemented()))
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.event_note,
-              size: 35,
-              color: Colors.black,
-            ),
-            title: Text(
-              'PRÓXIMAS CLASES',
-              style: TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'NerkoOne',
-              ),
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
+          !isTeacher    
+              ?ListTile(
+                  leading: Icon(
+                    Icons.inventory_2,
+                    size: 35,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'HISTORIAL DE CLASES',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'NerkoOne',
+                    ),
+                  ),
+                  onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NotImplemented()))
+                  },
+                )
+              : Container(),
+          !isTeacher     
+              ?ListTile(
+                leading: Icon(
+                  Icons.event_note,
+                  size: 35,
+                  color: Colors.black,
+                ),
+                title: Text(
+                  'PRÓXIMAS CLASES',
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'NerkoOne',
+                  ),
+                ),
+                onTap: () async {
+                    List<Lesson> lessons = await helperAuth.getAllLessonsByEmail(correo); //= new List.empty();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NextLessons(
+                                    lessons: lessons,
+                                  )));
+                    },
+              )
+              : Container(),
           ListTile(
             leading: Icon(
               Icons.contact_support,

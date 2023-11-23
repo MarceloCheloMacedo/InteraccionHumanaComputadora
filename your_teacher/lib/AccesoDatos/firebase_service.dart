@@ -313,7 +313,7 @@ Future<bool> existeDisponibilidad(String correo) async {
 //----------------------------------Empieza   clases  --------------------------
 //------------------------------------------------------------------------------
 
-Future<List<Lesson>> getAllLessonsByEmailAC(String correo) async {
+Future<List<Lesson>> getAllLessonsByEmailAC(String? correo) async {
   CollectionReference collectionReferenceClases = db.collection('clases');
 
   QuerySnapshot queryClases =

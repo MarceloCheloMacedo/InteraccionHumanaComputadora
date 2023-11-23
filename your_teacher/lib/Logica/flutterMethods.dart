@@ -103,6 +103,10 @@ class FirebaseAuthHelper {
   }
 
   Future<List<Lesson>> getAllLessonsByEmail(String correo) async {
-    return await getAllLessonsByEmailAC(correo);
+    return await a.getAllLessonsByEmailAC(correo);
+  }
+
+  Future<void> insertLesson(Lesson lesson) async{
+    await a.insertLesson(lesson);
   }
 }
