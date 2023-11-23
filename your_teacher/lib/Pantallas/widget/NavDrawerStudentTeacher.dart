@@ -118,12 +118,16 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                       fontFamily: 'NerkoOne',
                     ),
                   ),
-                  onTap: () => {Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NotImplemented()))},
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotImplemented()))
+                  },
                 )
               : Container(),
-          !isTeacher    
-              ?ListTile(
+          !isTeacher
+              ? ListTile(
                   leading: Icon(
                     Icons.inventory_2,
                     size: 35,
@@ -137,35 +141,38 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                     ),
                   ),
                   onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NotImplemented()))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotImplemented()))
                   },
                 )
               : Container(),
-          !isTeacher     
-              ?ListTile(
-                leading: Icon(
-                  Icons.event_note,
-                  size: 35,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  'PRÓXIMAS CLASES',
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    fontFamily: 'NerkoOne',
+          !isTeacher
+              ? ListTile(
+                  leading: Icon(
+                    Icons.event_note,
+                    size: 35,
+                    color: Colors.black,
                   ),
-                ),
-                onTap: () async {
-                    List<Lesson> lessons = await helperAuth.getAllLessonsByEmail(correo); //= new List.empty();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextLessons(
-                                    lessons: lessons,
-                                  )));
-                    },
-              )
+                  title: Text(
+                    'PRÓXIMAS CLASES',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'NerkoOne',
+                    ),
+                  ),
+                  onTap: () async {
+                    List<Lesson> lessons = await helperAuth
+                        .getAllLessonsByEmail(correo); //= new List.empty();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NextLessons(
+                                  lessons: lessons,
+                                )));
+                  },
+                )
               : Container(),
           ListTile(
             leading: Icon(
@@ -226,7 +233,7 @@ class NavDrawerStudentTeacher extends StatelessWidget {
 
               await Future.delayed(Duration(seconds: 2)),
 
-              Provider.of<AppState>(context, listen: false).logout(),
+              //Provider.of<AppState>(context, listen: false).logout(),
               helperAuth.signOut(),
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MyLoggin()))
