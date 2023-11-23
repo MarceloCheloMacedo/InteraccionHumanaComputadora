@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
+import 'package:your_teacher/Dominios/Lesson.dart';
 import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/501NotImplemented.dart';
 import 'package:your_teacher/Pantallas/Available_Lessons.dart';
 import 'package:your_teacher/Pantallas/Available_Teacher.dart';
+import 'package:your_teacher/Pantallas/NextLessons.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 import 'package:your_teacher/Pantallas/help.dart';
 import 'package:your_teacher/Pantallas/login.dart';
@@ -150,9 +152,15 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                 fontFamily: 'NerkoOne',
               ),
             ),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+            onTap: () async {
+                List<Lesson> lessons = await helperAuth.getAllLessonsByEmail(correo); //= new List.empty();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NextLessons(
+                                lessons: lessons,
+                              )));
+                },
           ),
           ListTile(
             leading: Icon(
