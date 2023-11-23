@@ -122,47 +122,51 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => NotImplemented()))},
                 )
               : Container(),
-          ListTile(
-            leading: Icon(
-              Icons.inventory_2,
-              size: 35,
-              color: Colors.black,
-            ),
-            title: Text(
-              'HISTORIAL DE CLASES',
-              style: TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'NerkoOne',
-              ),
-            ),
-            onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NotImplemented()))
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.event_note,
-              size: 35,
-              color: Colors.black,
-            ),
-            title: Text(
-              'PRÓXIMAS CLASES',
-              style: TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'NerkoOne',
-              ),
-            ),
-            onTap: () async {
-                List<Lesson> lessons = await helperAuth.getAllLessonsByEmail(correo); //= new List.empty();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NextLessons(
-                                lessons: lessons,
-                              )));
-                },
-          ),
+          !isTeacher    
+              ?ListTile(
+                  leading: Icon(
+                    Icons.inventory_2,
+                    size: 35,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'HISTORIAL DE CLASES',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'NerkoOne',
+                    ),
+                  ),
+                  onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NotImplemented()))
+                  },
+                )
+              : Container(),
+          !isTeacher     
+              ?ListTile(
+                leading: Icon(
+                  Icons.event_note,
+                  size: 35,
+                  color: Colors.black,
+                ),
+                title: Text(
+                  'PRÓXIMAS CLASES',
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'NerkoOne',
+                  ),
+                ),
+                onTap: () async {
+                    List<Lesson> lessons = await helperAuth.getAllLessonsByEmail(correo); //= new List.empty();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NextLessons(
+                                    lessons: lessons,
+                                  )));
+                    },
+              )
+              : Container(),
           ListTile(
             leading: Icon(
               Icons.contact_support,
