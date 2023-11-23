@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:your_teacher/AccesoDatos/Manage_Context.dart';
 import 'package:your_teacher/Dominios/Disponibilidad.dart';
+import 'package:your_teacher/Dominios/Lesson.dart';
 import 'package:your_teacher/Dominios/user.dart';
+import 'package:your_teacher/Logica/flutterMethods.dart';
 import 'package:your_teacher/Pantallas/find_class.dart';
 
 class CalendarScreen extends StatelessWidget {
@@ -21,6 +25,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   DateTime? _selectedDay;*/
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Calendario con horas del día'),
@@ -29,7 +34,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         children: [
           SizedBox(height: 20),
           daySelected != null
-              ? _buildHourList()
+              ? _buildHourList(context)
               : Text(userSelected.nombre),
         ],
       ),
@@ -42,12 +47,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return day.day == 20 && day.month == 11 && day.year == 2023;
   }
 */
-  Widget _buildHourList() {
+  Widget _buildHourList(BuildContext context) {
     // Simulación de horas del día
     List<String> hoursOfDay = List.generate(24, (index) => '$index:00');
     List<bool> hoursOfDayBool = List.generate(24, (index) => false);
     bool ocuped;
-
+    FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
+    String? correo = Provider.of<AppState>(context).usuarioLogeado?.correo;
     return Expanded(
       child: ListView.builder(
         itemCount: hoursOfDay.length,
@@ -64,7 +70,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ? Colors.red
                   : Colors.green,
             ),
-            onTap: () => _dialogBuilder(context,hoursOfDayBool[index]),
+            onTap: () => {
+              if(!hoursOfDayBool[index]){
+                _authHelper.insertLesson(Lesson(correo: correo!, dia: daySelected!, hora: '$index:00', link: 'zoom.es/lesson_'+'$index:00')),
+              },
+              _dialogBuilder(context,hoursOfDayBool[index])},
           );
         },
       ),
