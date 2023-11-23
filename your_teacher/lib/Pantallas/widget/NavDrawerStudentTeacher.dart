@@ -118,7 +118,8 @@ class NavDrawerStudentTeacher extends StatelessWidget {
                       fontFamily: 'NerkoOne',
                     ),
                   ),
-                  onTap: () => {Navigator.of(context).pop()},
+                  onTap: () => {Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NotImplemented()))},
                 )
               : Container(),
           ListTile(
