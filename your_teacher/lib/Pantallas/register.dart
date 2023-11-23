@@ -151,6 +151,13 @@ class _RegisterState extends State<Register> {
                         _dateOfBirth =
                             DateFormat('yyyy-MM-dd').format(pickedDate);
                       });
+                    } else {
+                      // Show an error message when the user cancels date selection
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Fecha de nacimiento es requerida'),
+                        ),
+                      );
                     }
                   },
                   child: Container(
