@@ -61,7 +61,7 @@ class _MyLogginState extends State<MyLoggin> {
                 ),
               ),
               const Text(
-                'Login',
+                'Iniciar Sesión',
                 style: TextStyle(fontFamily: 'NerkoOne', fontSize: 50.0),
               ),
               const Text(
@@ -83,8 +83,8 @@ class _MyLogginState extends State<MyLoggin> {
                 autofocus: true,
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
-                  hintText: 'EMAIL',
-                  labelText: 'Email',
+                  hintText: 'CORREO',
+                  labelText: 'Correo',
                   suffixIcon: const Icon(Icons.alternate_email),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
@@ -104,8 +104,8 @@ class _MyLogginState extends State<MyLoggin> {
                 autofocus: true,
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
-                  hintText: 'Password',
-                  labelText: 'Password',
+                  hintText: 'CONTRASEÑA',
+                  labelText: 'Contraseña',
                   suffixIcon: const Icon(Icons.lock_outline),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
@@ -128,7 +128,7 @@ class _MyLogginState extends State<MyLoggin> {
                   ),
                 ),
                 child: const Text(
-                  'Sign in',
+                  'Iniciar Sesión',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 20.0,
@@ -173,7 +173,7 @@ class _MyLogginState extends State<MyLoggin> {
               // String? email =
               //        Provider.of<AppState>(context).usuarioLogeado;
               const SizedBox(height: 5), // Agregar espacio entre los botones
-              const Text('Not a member?',
+              const Text('No estas registrado?',
                   style: TextStyle(
                       fontFamily: 'NerkoOne',
                       fontSize: 20.0,

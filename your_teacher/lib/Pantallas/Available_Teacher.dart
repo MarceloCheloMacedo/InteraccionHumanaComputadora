@@ -450,7 +450,7 @@ class _Available_TeacherState extends State<Available_Teacher> {
                   textAlign: TextAlign.center,
                 ),
                 const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 30.0),
+                  padding: EdgeInsets.symmetric(vertical: 28.0),
                   child: Text(''),
                 ),
                 ElevatedButton(
